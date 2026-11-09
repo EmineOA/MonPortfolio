@@ -1,0 +1,497 @@
+---
+import { profileConfig } from '@/config/profile';
+import { uiStrings, type Locale } from '@/config/i18n';
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = 'fr' } = Astro.props;
+const t = uiStrings[locale];
+const { education, experience, certifications } = profileConfig;
+const bnpExperience = experience.find((exp) => exp.id === 'bnp-paribas-cib');
+---
+
+<section
+  id="parcours"
+  class="scroll-mt-20 border-b border-white/[0.07] bg-bg-subtle/60 py-20 sm:py-24"
+  aria-labelledby="experience-heading"
+>
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+    <!-- Section Header -->
+    <div class="max-w-3xl">
+      <span class="section-eyebrow">
+        <span class="h-1.5 w-1.5 rounded-full bg-accent-primary"></span>
+        <span>{t.sections.experienceEyebrow}</span>
+      </span>
+      <h2 id="experience-heading" class="mt-3 section-heading">
+        {t.sections.experienceTitle}
+      </h2>
+      <p class="mt-4 text-base leading-relaxed text-text-secondary">
+        Formation d’ingénieur en mathématiques appliquées et intelligence artificielle, expérience technique en environnement bancaire Corporate &amp; Institutional Banking (BNP Paribas CIB) et certifications IBM.
+      </p>
+    </div>
+
+    <div class="mt-12 grid gap-8 lg:grid-cols-12">
+      <!-- Left Column: Academic & Professional Timeline (7 cols) -->
+      <div class="lg:col-span-7 space-y-6">
+        <h3 class="font-mono text-xs uppercase tracking-wider text-text-muted">
+          Formation d’ingénieur &amp; Expérience en entreprise
+        </h3>
+
+        <ol class="relative border-l border-white/[0.12] ml-3 space-y-8 pl-6">
+          <!-- Experience Item: BNP Paribas CIB -->
+          {experience.map((exp) => (
+            <li class="relative">
+              <span
+                class="absolute -left-[31px] top-1.5 flex h-3.5 w-3.5 items-center justify-center rounded-full border-2 border-accent-secondary bg-bg-primary"
+                aria-hidden="true"
+              />
+
+              <div class="tech-card relative overflow-hidden p-6">
+                <div
+                  class="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-accent-secondary via-accent-primary to-transparent opacity-80"
+                  aria-hidden="true"
+                />
+
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                  <span class="rounded bg-accent-secondary/15 px-2.5 py-0.5 font-mono text-xs font-semibold text-accent-secondary border border-accent-secondary/30">
+                    Mai – août 2026 | {exp.location}
+                  </span>
+                  {exp.team && (
+                    <span class="font-mono text-xs text-text-secondary">
+                      {exp.team}
+                    </span>
+                  )}
+                </div>
+
+                <div class="mt-3 flex flex-wrap items-baseline justify-between gap-2">
+                  <h4 class="font-display text-xl font-bold text-text-primary sm:text-2xl">
+                    {exp.company}
+                  </h4>
+                  {exp.period.value && (
+                    <span class="font-mono text-xs text-text-muted">
+                      {exp.period.value}
+                    </span>
+                  )}
+                </div>
+
+                {exp.role.value && (
+                  <p class="mt-1 font-display text-base font-semibold text-accent-primary">
+                    {exp.role.value}
+                  </p>
+                )}
+
+                {exp.contractualTitle && (
+                  <p class="mt-1 font-mono text-[11px] text-text-muted">
+                    Intitulé contractuel : {exp.contractualTitle} ({exp.exactDates})
+                  </p>
+                )}
+
+                {exp.summary && (
+                  <p class="mt-3.5 text-sm leading-relaxed text-text-primary/95">
+                    {exp.summary}
+                  </p>
+                )}
+
+                <p class="mt-2.5 text-xs leading-relaxed text-text-secondary">
+                  {exp.contextNote}
+                </p>
+
+                {exp.missions.value && exp.missions.value.length > 0 && (
+                  <div class="mt-4 rounded-lg border border-white/[0.07] bg-bg-primary/65 p-4">
+                    <span class="block font-mono text-[11px] uppercase tracking-wider text-text-muted">
+                      Missions &amp; réalisations clés
+                    </span>
+                    <ul class="mt-2.5 space-y-2 text-xs sm:text-sm text-text-secondary">
+                      {exp.missions.value.map((mission) => (
+                        <li class="flex items-start gap-2">
+                          <span class="mt-0.5 font-mono text-xs text-accent-primary" aria-hidden="true">
+                            ▹
+                          </span>
+                          <span>{mission}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {exp.mainTechnologies && exp.mainTechnologies.length > 0 && (
+                  <div class="mt-5 border-t border-white/[0.07] pt-4">
+                    <span class="block font-mono text-[11px] uppercase tracking-wider text-text-muted mb-2.5">
+                      Technologies principales mobilisées
+                    </span>
+                    <div class="flex flex-wrap gap-1.5" aria-label="Technologies utilisées chez BNP Paribas CIB">
+                      {exp.mainTechnologies.map((tech) => (
+                        <span class="tech-badge">{tech}</span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {exp.projects && exp.projects.length > 0 && (
+                  <div class="mt-5 flex items-center justify-between border-t border-white/[0.07] pt-4">
+                    <span class="font-mono text-xs text-text-secondary">
+                      2 réalisations techniques détaillées (ERE &amp; ISO 20022)
+                    </span>
+                    <a
+                      href="#bnp-paribas-cib-projets"
+                      class="inline-flex items-center gap-1.5 font-mono text-xs font-semibold text-accent-primary hover:underline"
+                    >
+                      <span>Explorer les 2 projets du stage</span>
+                      <span aria-hidden="true">↓</span>
+                    </a>
+                  </div>
+                )}
+              </div>
+            </li>
+          ))}
+
+          <!-- Education Item: CY Tech -->
+          <li class="relative">
+            <span
+              class="absolute -left-[31px] top-1.5 flex h-3.5 w-3.5 items-center justify-center rounded-full border-2 border-accent-primary bg-bg-primary"
+              aria-hidden="true"
+            ></span>
+
+            <div class="tech-card p-6">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <span class="rounded bg-accent-primary/15 px-2.5 py-0.5 font-mono text-xs font-semibold text-accent-primary border border-accent-primary/30">
+                  {education.period}
+                </span>
+                <span class="font-mono text-xs text-accent-secondary">
+                  FORMATION D’INGÉNIEUR
+                </span>
+              </div>
+
+              <h4 class="mt-3 font-display text-xl font-bold text-text-primary">
+                {education.institution}
+              </h4>
+              <p class="mt-1 text-sm font-semibold text-accent-primary">
+                {education.degree} — Spécialisation en {education.specialization}
+              </p>
+
+              <!-- Academic Distinction Banner -->
+              <div
+                class="mt-4 flex items-start gap-3 rounded-lg border border-accent-secondary/35 bg-bg-elevated/90 p-3.5"
+              >
+                <svg
+                  class="mt-0.5 h-5 w-5 shrink-0 text-accent-secondary"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 2a1 1 0 01.832.445l1.878 2.817 3.314.663a1 1 0 01.554 1.685l-2.34 2.34.468 3.277a1 1 0 01-1.451 1.054L10 12.764l-2.955 1.517a1 1 0 01-1.451-1.054l.468-3.277-2.34-2.34a1 1 0 01.554-1.685l3.314-.663L9.168 2.445A1 1 0 0110 2z"
+                    clip-rule="evenodd"></path>
+                </svg>
+                <div>
+                  <span class="block font-mono text-[11px] uppercase tracking-wider text-accent-secondary">
+                    Distinction académique
+                  </span>
+                  <p class="mt-0.5 text-sm font-semibold text-text-primary">
+                    {education.distinction}
+                  </p>
+                </div>
+              </div>
+
+              <ul class="mt-4 space-y-2 text-sm text-text-secondary">
+                {education.details.map((detail) => (
+                  <li class="flex items-start gap-2">
+                    <span class="mt-1 font-mono text-xs text-accent-primary" aria-hidden="true">
+                      ▹
+                    </span>
+                    <span>{detail}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </li>
+        </ol>
+      </div>
+
+      <!-- Right Column: IBM Certifications & Profile Synthesis (5 cols) -->
+      <div class="lg:col-span-5 space-y-6">
+        <h3 class="font-mono text-xs uppercase tracking-wider text-text-muted">
+          Certifications professionnelles sélectionnées
+        </h3>
+
+        <div class="tech-card p-6">
+          <div class="flex items-center justify-between border-b border-white/[0.07] pb-4">
+            <div>
+              <span class="font-mono text-xs font-semibold text-accent-primary">
+                IBM SKILLS NETWORK / COURSERA
+              </span>
+              <h4 class="mt-0.5 font-display text-lg font-bold text-text-primary">
+                Certifications IBM Data Science &amp; IA
+              </h4>
+            </div>
+            <span class="rounded-md bg-bg-elevated px-2.5 py-1 font-mono text-xs font-semibold text-accent-secondary border border-accent-secondary/30">
+              5 CERTIFICATIONS
+            </span>
+          </div>
+
+          <ul class="mt-5 divide-y divide-white/[0.06]">
+            {certifications.map((cert, index) => (
+              <li class="py-3.5 first:pt-0 last:pb-0">
+                <div class="flex items-start justify-between gap-3">
+                  <div class="flex items-start gap-3">
+                    <span class="mt-0.5 font-mono text-xs font-semibold text-accent-primary">
+                      0{index + 1}
+                    </span>
+                    <div>
+                      <p class="font-display text-sm font-semibold text-text-primary">
+                        {cert.title}
+                      </p>
+                      <p class="mt-0.5 font-mono text-[11px] text-text-muted">
+                        {cert.issuer} • {cert.category}
+                      </p>
+                    </div>
+                  </div>
+                  <span
+                    class="shrink-0 rounded bg-bg-elevated px-2 py-0.5 font-mono text-[10px] text-text-secondary border border-white/[0.06]"
+                  >
+                    IBM
+                  </span>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <!-- Languages & Academic Rigor Summary Box -->
+        <div class="tech-card p-6">
+          <h4 class="font-mono text-xs font-semibold uppercase tracking-wider text-text-primary">
+            Langues &amp; Environnement de travail
+          </h4>
+          <div class="mt-4 grid grid-cols-2 gap-3">
+            {profileConfig.languages.map((lang) => (
+              <div class="rounded-lg border border-white/[0.06] bg-bg-elevated/60 p-3">
+                <span class="block font-display text-sm font-bold text-text-primary">
+                  {lang.name}
+                </span>
+                <span class="mt-0.5 block font-mono text-[11px] text-text-secondary">
+                  {lang.level}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          <div class="mt-5 border-t border-white/[0.07] pt-4">
+            <span class="block font-mono text-[11px] uppercase tracking-wider text-text-muted">
+              Cibles de stage de fin d’études
+            </span>
+            <ul class="mt-2.5 space-y-1.5 text-xs text-text-secondary">
+              {profileConfig.identity.targetEnvironments.map((env) => (
+                <li class="flex items-center gap-2">
+                  <span class="h-1 w-1 rounded-full bg-accent-primary" aria-hidden="true" />
+                  <span>{env}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Detailed BNP Paribas CIB Professional Projects Section -->
+    {bnpExperience && bnpExperience.projects && bnpExperience.projects.length > 0 && (
+      <div
+        id="bnp-paribas-cib-projets"
+        class="mt-16 scroll-mt-24 border-t border-white/[0.08] pt-14"
+      >
+        <div class="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+          <div class="max-w-3xl">
+            <span class="section-eyebrow">
+              <span class="h-1.5 w-1.5 rounded-full bg-accent-secondary"></span>
+              <span>FOCUS EXPÉRIENCE EN ENTREPRISE // BNP PARIBAS CIB — AML IT DETECTION TEAM</span>
+            </span>
+            <h3 class="mt-2.5 font-display text-2xl font-bold tracking-tight text-text-primary sm:text-3xl">
+              Réalisations professionnelles réalisées durant le stage
+            </h3>
+            <p class="mt-2.5 text-sm leading-relaxed text-text-secondary sm:text-base">
+              Détail des deux projets menés au sein de l’équipe <strong class="text-text-primary">AML IT Detection Team</strong> à Montreuil (4 mai – 31 août 2026) : développement d’un framework d’évaluation d’Entity Resolution (travail individuel principal) et modélisation de données de paiement ISO 20022 (travail collaboratif en binôme).
+            </p>
+          </div>
+          <div class="shrink-0">
+            <span class="inline-flex items-center gap-2 rounded-lg border border-white/[0.08] bg-bg-surface px-3.5 py-2 font-mono text-xs text-text-secondary">
+              <span class="h-2 w-2 rounded-full bg-accent-primary"></span>
+              <span>Environnement interne BNP Paribas CIB</span>
+            </span>
+          </div>
+        </div>
+
+        <div class="mt-10 space-y-10">
+          {bnpExperience.projects.map((proj) => (
+            <article
+              class:list={[
+                'tech-card relative overflow-hidden p-6 sm:p-8 lg:p-10',
+                proj.priority ? 'border-accent-primary/35' : '',
+              ]}
+            >
+              <!-- Top accent bar -->
+              <div
+                class:list={[
+                  'pointer-events-none absolute inset-x-0 top-0 h-[2px]',
+                  proj.priority
+                    ? 'bg-gradient-to-r from-accent-primary via-accent-secondary to-transparent'
+                    : 'bg-gradient-to-r from-white/25 via-accent-primary/40 to-transparent',
+                ]}
+                aria-hidden="true"
+              />
+
+              <!-- Project Header -->
+              <div class="flex flex-wrap items-center justify-between gap-3 border-b border-white/[0.08] pb-5">
+                <div class="flex flex-wrap items-center gap-2.5">
+                  <span
+                    class:list={[
+                      'rounded px-2.5 py-1 font-mono text-xs font-semibold border',
+                      proj.priority
+                        ? 'bg-accent-primary/15 text-accent-primary border-accent-primary/35'
+                        : 'bg-bg-elevated text-text-primary border-white/[0.1]',
+                    ]}
+                  >
+                    {proj.code}
+                  </span>
+                  <span class="rounded bg-bg-elevated px-2.5 py-1 font-mono text-xs text-accent-secondary border border-white/[0.07]">
+                    BNP Paribas CIB · AML IT
+                  </span>
+                </div>
+
+                <span
+                  class:list={[
+                    'rounded-full px-3 py-1 font-mono text-xs font-medium border',
+                    proj.priority
+                      ? 'bg-accent-secondary/10 text-accent-secondary border-accent-secondary/35'
+                      : 'bg-bg-elevated text-text-secondary border-white/[0.08]',
+                  ]}
+                >
+                  {proj.priority ? `★ ${proj.workModeBadge}` : `◆ ${proj.workModeBadge}`}
+                </span>
+              </div>
+
+              <div class="mt-6">
+                <h4 class="font-display text-2xl font-bold text-text-primary sm:text-3xl">
+                  {proj.title}
+                </h4>
+                <p class="mt-2 font-display text-base font-medium text-accent-primary">
+                  {proj.subtitle}
+                </p>
+              </div>
+
+              <!-- Context / Problem & Objective Grid -->
+              <div class="mt-6 grid gap-5 lg:grid-cols-2">
+                <div class="rounded-xl border border-white/[0.07] bg-bg-primary/70 p-5">
+                  <span class="block font-mono text-xs font-semibold uppercase tracking-wider text-accent-primary">
+                    {proj.priority ? 'Contexte & Problématique AML' : 'Contexte métier & Standards de paiement'}
+                  </span>
+                  <p class="mt-2.5 text-sm leading-relaxed text-text-secondary">
+                    {proj.context}
+                  </p>
+                </div>
+
+                <div class="rounded-xl border border-white/[0.07] bg-bg-primary/70 p-5">
+                  <span class="block font-mono text-xs font-semibold uppercase tracking-wider text-accent-secondary">
+                    Objectif technique
+                  </span>
+                  <p class="mt-2.5 text-sm leading-relaxed text-text-secondary">
+                    {proj.objective}
+                  </p>
+                </div>
+              </div>
+
+              <!-- Quantitative Metrics Bar (if present, e.g. Project 02 DFR / ISO 20022) -->
+              {proj.metrics && proj.metrics.length > 0 && (
+                <div class="mt-6 rounded-xl border border-accent-primary/25 bg-bg-primary/85 p-5">
+                  <div class="flex flex-wrap items-center justify-between gap-2 border-b border-white/[0.07] pb-3">
+                    <span class="font-mono text-xs font-semibold uppercase tracking-wider text-text-primary">
+                      Résultats quantitatifs du projet (travail réalisé en binôme)
+                    </span>
+                    <span class="font-mono text-[11px] text-accent-secondary">
+                      PÉRIMÈTRE DFR / ISO 20022
+                    </span>
+                  </div>
+                  <dl class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                    {proj.metrics.map((metric) => (
+                      <div class="rounded-lg border border-white/[0.06] bg-bg-surface/90 p-3.5">
+                        <dt class="font-mono text-xs text-text-secondary">{metric.label}</dt>
+                        <dd class="mt-1 font-mono text-xl font-bold text-accent-primary">
+                          {metric.value}
+                        </dd>
+                        <p class="mt-1 text-xs leading-snug text-text-muted">{metric.detail}</p>
+                      </div>
+                    ))}
+                  </dl>
+                </div>
+              )}
+
+              <!-- 4 Structured Technical Realization Blocks -->
+              <div class="mt-6 grid gap-5 md:grid-cols-2">
+                {proj.sections.map((sec, idx) => (
+                  <div class="rounded-xl border border-white/[0.07] bg-bg-elevated/40 p-5">
+                    <div class="flex items-center gap-2.5">
+                      <span class="inline-flex h-6 w-6 items-center justify-center rounded bg-accent-primary/15 font-mono text-xs font-bold text-accent-primary border border-accent-primary/30">
+                        0{idx + 1}
+                      </span>
+                      <h5 class="font-display text-base font-bold text-text-primary">
+                        {sec.title}
+                      </h5>
+                    </div>
+                    <ul class="mt-3.5 space-y-2 text-xs sm:text-sm text-text-secondary">
+                      {sec.items.map((item) => (
+                        <li class="flex items-start gap-2">
+                          <span class="mt-0.5 font-mono text-xs text-accent-primary" aria-hidden="true">
+                            ▹
+                          </span>
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+
+              <!-- Deliverables, Status & Technologies Footer -->
+              <div class="mt-6 rounded-xl border border-white/[0.07] bg-bg-primary/65 p-5">
+                <div class="grid gap-6 lg:grid-cols-12">
+                  <div class="lg:col-span-7">
+                    <span class="block font-mono text-xs font-semibold uppercase tracking-wider text-text-primary">
+                      Livrables &amp; Résultats obtenus
+                    </span>
+                    <ul class="mt-2.5 space-y-1.5 text-xs sm:text-sm text-text-secondary">
+                      {proj.deliverablesAndResults.map((res) => (
+                        <li class="flex items-start gap-2">
+                          <span class="mt-0.5 font-mono text-xs text-accent-secondary" aria-hidden="true">
+                            ✓
+                          </span>
+                          <span>{res}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <p class="mt-3 font-mono text-[11px] text-text-muted">
+                      Note : {proj.statusNote}
+                    </p>
+                  </div>
+
+                  <div class="lg:col-span-5 flex flex-col justify-between border-t border-white/[0.07] pt-4 lg:border-t-0 lg:border-l lg:pl-6 lg:pt-0">
+                    <div>
+                      <span class="block font-mono text-xs font-semibold uppercase tracking-wider text-text-primary">
+                        Technologies &amp; Outils mobilisés
+                      </span>
+                      <div class="mt-3 flex flex-wrap gap-1.5">
+                        {proj.technologies.map((tech) => (
+                          <span class="tech-badge">{tech}</span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    )}
+  </div>
+</section>

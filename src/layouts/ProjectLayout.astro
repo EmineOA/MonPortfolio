@@ -1,0 +1,196 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ArchitectureDiagram from '@/components/mdx/ArchitectureDiagram.astro';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  prevProject?: CollectionEntry<'projects'> | null;
+  nextProject?: CollectionEntry<'projects'> | null;
+}
+
+const { project, prevProject = null, nextProject = null } = Astro.props;
+const { data } = project;
+---
+
+<BaseLayout
+  title={`${data.title} — Étude de cas | Emine AGATT`}
+  description={data.summary}
+  canonicalPath={`/projets/${project.slug}/`}
+>
+  <!-- Top Case Study Header -->
+  <section class="relative border-b border-white/[0.08] bg-radial-tech pt-10 pb-14 sm:pt-14 sm:pb-16">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <!-- Breadcrumb -->
+      <nav aria-label="Fil d'Ariane" class="flex items-center gap-2 font-mono text-xs text-text-secondary">
+        <a href="/" class="hover:text-accent-primary transition-colors">Accueil</a>
+        <span aria-hidden="true">/</span>
+        <a href="/#projets" class="hover:text-accent-primary transition-colors">Projets</a>
+        <span aria-hidden="true">/</span>
+        <span class="text-accent-primary">{data.code}</span>
+      </nav>
+
+      <div class="mt-6 flex flex-wrap items-center gap-2.5">
+        <span class="rounded bg-accent-primary/15 px-2.5 py-1 font-mono text-xs font-semibold text-accent-primary border border-accent-primary/30">
+          {data.code}
+        </span>
+        <span class="rounded bg-bg-elevated px-2.5 py-1 font-mono text-xs text-accent-secondary border border-white/[0.07]">
+          {data.domain}
+        </span>
+        {data.priority && (
+          <span class="rounded bg-accent-secondary/10 px-2.5 py-1 font-mono text-xs text-accent-secondary border border-accent-secondary/30">
+            ★ Étude de cas prioritaire Data / IA
+          </span>
+        )}
+      </div>
+
+      <h1 class="mt-4 max-w-4xl font-display text-3xl font-bold tracking-tight text-text-primary sm:text-4xl lg:text-5xl">
+        {data.title}
+      </h1>
+
+      <p class="mt-4 max-w-3xl text-base leading-relaxed text-text-secondary sm:text-lg">
+        {data.summary}
+      </p>
+
+      <!-- Tech stack badges -->
+      <div class="mt-6 flex flex-wrap gap-2" aria-label="Technologies utilisées">
+        {data.technologies.map((tech) => (
+          <span class="tech-badge">{tech}</span>
+        ))}
+      </div>
+
+      <!-- Verified Metrics Bar -->
+      {data.metrics && data.metrics.length > 0 && (
+        <dl class="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {data.metrics.map((metric) => (
+            <div class="tech-card p-4">
+              <dt class="font-mono text-xs text-text-secondary">{metric.label}</dt>
+              <dd class="mt-1.5 font-mono text-xl font-bold text-accent-primary">
+                {metric.value}
+              </dd>
+              {metric.detail && (
+                <p class="mt-1 text-xs leading-snug text-text-muted">{metric.detail}</p>
+              )}
+            </div>
+          ))}
+        </dl>
+      )}
+    </div>
+  </section>
+
+  <!-- Main Content & Architecture Section -->
+  <section class="py-12 sm:py-16">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <!-- Reusable System Architecture Diagram -->
+      <ArchitectureDiagram
+        steps={data.architectureSteps}
+        title={`Schéma de pipeline — ${data.shortTitle}`}
+      />
+
+      <div class="mt-10 grid gap-10 lg:grid-cols-12">
+        <!-- Left Sidebar: 9-point Case Study Navigation & Metadata (4 cols) -->
+        <aside class="lg:col-span-4 space-y-6">
+          <div class="tech-card sticky top-24 p-6">
+            <h2 class="font-mono text-xs font-semibold uppercase tracking-wider text-text-primary">
+              Plan de l’étude de cas
+            </h2>
+            <ol class="mt-4 space-y-2 text-xs font-mono text-text-secondary">
+              <li>1. Présentation et contexte</li>
+              <li>2. Problématique</li>
+              <li>3. Objectifs</li>
+              <li>4. Architecture et méthodologie</li>
+              <li>5. Réalisation technique</li>
+              <li>6. Expérimentations et résultats disponibles</li>
+              <li>7. Difficultés et enseignements</li>
+              <li>8. Technologies</li>
+              <li>9. Code source ou démonstration</li>
+            </ol>
+
+            <div class="mt-6 border-t border-white/[0.08] pt-5">
+              <h3 class="font-mono text-xs font-semibold uppercase tracking-wider text-text-primary">
+                Code source &amp; Démonstration
+              </h3>
+              {data.repositoryUrl || data.demoUrl ? (
+                <div class="mt-3 flex flex-col gap-2">
+                  {data.repositoryUrl && (
+                    <a
+                      href={data.repositoryUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="inline-flex items-center justify-between rounded-lg border border-accent-primary/40 bg-accent-primary/10 px-3.5 py-2 font-mono text-xs font-semibold text-accent-primary hover:bg-accent-primary hover:text-bg-primary transition-colors"
+                    >
+                      <span>Consulter le dépôt GitHub</span>
+                      <span aria-hidden="true">↗</span>
+                    </a>
+                  )}
+                  {data.demoUrl && (
+                    <a
+                      href={data.demoUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="inline-flex items-center justify-between rounded-lg border border-accent-secondary/40 bg-bg-elevated px-3.5 py-2 font-mono text-xs font-semibold text-accent-secondary"
+                    >
+                      <span>Accéder à la démonstration</span>
+                      <span aria-hidden="true">↗</span>
+                    </a>
+                  )}
+                </div>
+              ) : (
+                <p class="mt-2 text-xs leading-relaxed text-text-secondary">
+                  {data.repositoryStatusNote}
+                </p>
+              )}
+            </div>
+
+            <div class="mt-6 border-t border-white/[0.08] pt-5">
+              <a
+                href="/#projets"
+                class="inline-flex items-center gap-2 font-mono text-xs font-semibold text-accent-primary hover:underline"
+              >
+                <span aria-hidden="true">←</span>
+                <span>Retour aux 5 projets sélectionnés</span>
+              </a>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Right Column: Full MDX Case Study Body (8 cols) -->
+        <article class="lg:col-span-8 tech-card p-6 sm:p-8 lg:p-10 prose-tech">
+          <slot />
+        </article>
+      </div>
+
+      <!-- Previous / Next Project Navigation -->
+      <nav
+        aria-label="Navigation entre les projets"
+        class="mt-12 grid gap-4 border-t border-white/[0.08] pt-8 sm:grid-cols-2"
+      >
+        {prevProject ? (
+          <a
+            href={`/projets/${prevProject.slug}/`}
+            class="tech-card-interactive flex flex-col justify-between p-5"
+          >
+            <span class="font-mono text-xs text-text-muted">← Projet précédent ({prevProject.data.code})</span>
+            <span class="mt-2 font-display text-base font-bold text-text-primary">
+              {prevProject.data.title}
+            </span>
+          </a>
+        ) : (
+          <div />
+        )}
+
+        {nextProject && (
+          <a
+            href={`/projets/${nextProject.slug}/`}
+            class="tech-card-interactive flex flex-col justify-between p-5 sm:text-right"
+          >
+            <span class="font-mono text-xs text-text-muted">Projet suivant ({nextProject.data.code}) →</span>
+            <span class="mt-2 font-display text-base font-bold text-text-primary">
+              {nextProject.data.title}
+            </span>
+          </a>
+        )}
+      </nav>
+    </div>
+  </section>
+</BaseLayout>

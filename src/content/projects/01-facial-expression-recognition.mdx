@@ -1,0 +1,113 @@
+---
+order: 1
+code: "PRJ-01"
+title: "Reconnaissance d'expressions faciales et détection multi-visages"
+shortTitle: "Vision par ordinateur & Deep Learning (FER2013 / YOLOv8-Face)"
+domain: "Computer Vision & Deep Learning"
+priority: true
+summary: "Développement d'une chaîne de vision par ordinateur combinant un réseau de neurones convolutif (CNN) entraîné sur FER2013 et un système de détection de visages permettant d'analyser des images et des vidéos contenant plusieurs personnes."
+technologies:
+  - "Python"
+  - "TensorFlow/Keras"
+  - "CNN"
+  - "YOLOv8-Face"
+  - "OpenCV"
+  - "scikit-learn"
+highlights:
+  - "Dataset FER2013 de 35 887 images réparties en 7 catégories d'expressions"
+  - "Accuracy documentée sur le jeu de test : 59,6 % et Macro F1-score : 0,54"
+  - "Comparaison expérimentale avec MobileNetV2 et étude de l'augmentation de données"
+  - "Pipeline d'inférence multi-visages sur images fixes et flux vidéo avec YOLOv8-Face et OpenCV"
+metrics:
+  - label: "Corpus d'entraînement & évaluation"
+    value: "35 887 images"
+    detail: "FER2013 — 7 catégories d'expressions faciales"
+  - label: "Accuracy (Jeu de test)"
+    value: "59,6 %"
+    detail: "Évaluation multi-classes sur le split de test FER2013"
+  - label: "Macro F1-score"
+    value: "0,54"
+    detail: "Mesure équilibrée tenant compte du déséquilibre des classes"
+  - label: "Détection en amont"
+    value: "YOLOv8-Face"
+    detail: "Extraction et recadrage multi-visages sur images et vidéos"
+architectureSteps:
+  - step: "01"
+    title: "Acquisition & Détection Multi-Visages"
+    description: "Lecture d'images ou de flux vidéo via OpenCV et localisation simultanée de plusieurs visages à l'aide de YOLOv8-Face."
+    tag: "OpenCV • YOLOv8-Face"
+  - step: "02"
+    title: "Prétraitement & Normalisation"
+    description: "Extraction des régions d'intérêt (ROI), conversion et mise à l'échelle conforme à la distribution du corpus FER2013."
+    tag: "Prétraitement"
+  - step: "03"
+    title: "Classification par Réseau Convolutif (CNN)"
+    description: "Inférence via le modèle CNN entraîné avec TensorFlow/Keras (et étude comparative avec MobileNetV2) sur les 7 classes d'expressions."
+    tag: "TensorFlow/Keras • CNN"
+  - step: "04"
+    title: "Évaluation Quantitative & Restitution"
+    description: "Calcul des métriques globales et par classe avec scikit-learn (Accuracy : 59,6 %, Macro F1 : 0,54) et projection visuelle sur les scènes multi-personnes."
+    tag: "scikit-learn • Analyse"
+repositoryUrl: null
+demoUrl: null
+repositoryStatusNote: "Le lien vers le dépôt GitHub ou un notebook de démonstration pourra être renseigné dans la configuration du projet."
+---
+
+## 1. Présentation et contexte
+
+L'analyse automatique des expressions faciales constitue un problème fondamental de la vision par ordinateur, à l'intersection du **Deep Learning**, du traitement d'images et de l'interaction humain-machine. Ce projet consiste à concevoir et évaluer une chaîne complète capable non seulement de classifier une expression faciale isolée, mais également d'opérer sur des **images et des séquences vidéo comportant plusieurs personnes**.
+
+L'approche adoptée associe un modèle de classification spécialisé, entraîné sur le jeu de données de référence **FER2013** (*35 887 images réparties en 7 catégories d'expressions*), à un module de détection de visages performant fondé sur **YOLOv8-Face**.
+
+## 2. Problématique
+
+Comment construire un pipeline de vision par ordinateur robuste capable de détecter simultanément plusieurs visages dans des scènes réelles (images ou vidéos) tout en classifiant chaque visage selon 7 catégories d'expressions faciales, malgré la faible résolution native, le bruit d'annotation et le déséquilibre inter-classes propres au dataset **FER2013** ?
+
+## 3. Objectifs
+
+- **Concevoir et entraîner un réseau de neurones convolutif (CNN)** dédié à la classification des 7 expressions du corpus FER2013 à l'aide de `TensorFlow/Keras`.
+- **Évaluer rigoureusement les performances** au-delà de la simple exactitude globale, en intégrant le **Macro F1-score** via `scikit-learn` afin de mesurer le comportement du modèle sur les classes minoritaires ou ambiguës.
+- **Mener une étude expérimentale comparative** incluant l'architecture **MobileNetV2** et l'impact des stratégies d'**augmentation de données**.
+- **Coupler le classifieur à YOLOv8-Face et OpenCV** pour permettre une inférence multi-visages fluide sur des images et des vidéos.
+
+## 4. Architecture et méthodologie
+
+La méthodologie repose sur une séparation claire entre la tâche de **localisation spatiale** des visages et la tâche de **classification d'expression** :
+
+1. **Préparation et structuration du corpus FER2013** : exploitation des **35 887 images** annotées selon **7 catégories d'expressions**.
+2. **Modélisation Deep Learning** : construction d'une architecture **CNN** supervisée sous `TensorFlow/Keras`, complétée par des expérimentations sur l'augmentation géométrique et photométrique des données ainsi qu'une comparaison méthodologique avec **MobileNetV2**.
+3. **Chaîne d'inférence multi-personnes** : intégration de **YOLOv8-Face** en amont pour isoler chaque visage présent dans une image ou une trame vidéo (`OpenCV`), suivie du prétraitement individuel et du passage dans le CNN.
+
+## 5. Réalisation technique
+
+- **Entraînement et expérimentation Deep Learning (`Python`, `TensorFlow/Keras`)** :
+  - Mise en place du pipeline de chargement et de normalisation des tenseurs d'images issus de FER2013.
+  - Conception de l'architecture convolutive (couches de convolution, d'activation, de pooling et de régularisation) et suivi des courbes d'apprentissage.
+  - Protocole d'expérimentation sur l'**augmentation de données** pour limiter le sur-apprentissage (*overfitting*) et améliorer la généralisation.
+  - Mise en œuvre d'un banc d'essai comparatif avec **MobileNetV2**.
+- **Détection et traitement flux vidéo (`YOLOv8-Face`, `OpenCV`)** :
+  - Détection multi-visages permettant de traiter des scènes de groupe.
+  - Découpage automatique des boîtes englobantes (*bounding boxes*), redimensionnement vers le format d'entrée du classifieur et affichage des prédictions associées à chaque individu détecté.
+
+## 6. Expérimentations et résultats disponibles
+
+Les évaluations conduites avec `scikit-learn` sur le jeu de test documentent les résultats suivants :
+
+- **Volume et structure du dataset** : **35 887 images** réparties sur **7 catégories d'expressions**.
+- **Accuracy sur le jeu de test** : **59,6 %**.
+- **Macro F1-score** : **0,54**.
+- **Analyse comparative** : l'étude menée entre le CNN personnalisé, **MobileNetV2** et les différentes configurations d'**augmentation de données** a permis de caractériser le compromis entre capacité de représentation, coût de calcul et sensibilité aux classes moins représentées.
+
+## 7. Difficultés et enseignements
+
+- **Qualité intrinsèque et ambiguïté de FER2013** : la faible résolution des images sources et la proximité visuelle entre certaines expressions faciales limitent structurellement le plafond d'accuracy atteignable et justifient le suivi simultané de l'**Accuracy (59,6 %)** et du **Macro F1-score (0,54)**.
+- **Écart de domaine (*Domain Shift*) en conditions réelles** : lors du passage d'images centrées du dataset aux régions extraites par **YOLOv8-Face** sur des vidéos multi-personnes, les variations d'angle de pose, d'échelle et d'éclairage exigent un cadrage et une normalisation rigoureux.
+- **Apport de la démarche expérimentale** : la comparaison avec **MobileNetV2** et les tests d'augmentation de données ont mis en évidence l'importance d'adapter l'architecture à la résolution effective des entrées plutôt que de multiplier aveuglément le nombre de paramètres.
+
+## 8. Technologies
+
+`Python` • `TensorFlow/Keras` • `CNN` • `YOLOv8-Face` • `OpenCV` • `scikit-learn` • `MobileNetV2`
+
+## 9. Code source ou démonstration
+
+Les liens vers le code source ou les supports de démonstration ne sont pas encore publiés publiquement et peuvent être communiqués sur demande lors d'un échange technique.

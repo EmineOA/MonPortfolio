@@ -1,0 +1,104 @@
+---
+order: 4
+code: "PRJ-04"
+title: "Plateforme de gestion IoT"
+shortTitle: "Architecture Web Django, Supervision & Sécurité RBAC à 4 niveaux"
+domain: "Ingénierie Logicielle & Architecture Web"
+priority: false
+summary: "Application web de gestion d'équipements IoT, comportant des modules de visualisation, d'administration et un contrôle d'accès à quatre niveaux."
+technologies:
+  - "Django"
+  - "Python"
+  - "HTML/CSS"
+  - "Base de données relationnelle"
+highlights:
+  - "Architecture logicielle modulaire développée avec le framework Python Django"
+  - "Système de sécurité et contrôle d'accès basé sur les rôles (RBAC) structuré en 4 niveaux"
+  - "Modules dédiés de visualisation d'équipements IoT et d'administration système"
+  - "Conception de la base de données relationnelle et développement collaboratif en équipe"
+metrics:
+  - label: "Contrôle d'accès (RBAC)"
+    value: "4 niveaux"
+    detail: "Cloisonnement granulaire des permissions et des vues"
+  - label: "Backend & Architecture"
+    value: "Python / Django"
+    detail: "Architecture MVT, ORM relationnel et administration sécurisée"
+  - label: "Modules fonctionnels"
+    value: "Visualisation & Admin"
+    detail: "Supervision du parc d'équipements IoT et gestion des droits"
+  - label: "Organisation"
+    value: "Travail en équipe"
+    detail: "Coordination technique, modélisation et intégration"
+architectureSteps:
+  - step: "01"
+    title: "Modélisation Relationnelle du Parc IoT"
+    description: "Structuration des entités (équipements IoT, états, utilisateurs, profils d'accès) au sein d'une base de données relationnelle exploitée via l'ORM Django."
+    tag: "Base de données relationnelle • ORM"
+  - step: "02"
+    title: "Moteur d'Autorisation RBAC à 4 Niveaux"
+    description: "Vérification systématique des privilèges côté serveur pour restreindre la consultation, la configuration et l'administration selon 4 niveaux d'habilitation."
+    tag: "Sécurité RBAC • Django"
+  - step: "03"
+    title: "Logique Métier & Administration"
+    description: "Gestion du cycle de vie des équipements connectés, opérations d'administration et traçabilité des actions au sein du backend Python."
+    tag: "Python • Architecture Logicielle"
+  - step: "04"
+    title: "Interfaces de Visualisation & Supervision"
+    description: "Restitution claire de l'état des équipements IoT et panneaux de gestion adaptés au niveau d'accréditation de l'utilisateur."
+    tag: "HTML/CSS • Visualisation"
+repositoryUrl: null
+demoUrl: null
+repositoryStatusNote: "Projet réalisé en équipe — architecture et extraits techniques présentables en entretien."
+---
+
+## 1. Présentation et contexte
+
+Le déploiement d'équipements connectés (**IoT**) au sein d'une organisation nécessite une plateforme centrale capable de conjuguer **visibilité opérationnelle**, **administration structurée** et **sécurité stricte des accès**. Ce projet consiste à concevoir et développer en équipe une **application web complète sous Django (Python)** permettant de superviser et d'administrer une flotte d'équipements IoT tout en appliquant une politique de contrôle d'accès à quatre niveaux.
+
+## 2. Problématique
+
+Comment structurer l'architecture logicielle et le modèle de données relationnel d'une plateforme de gestion IoT afin d'offrir des interfaces de visualisation et d'administration fluides, tout en garantissant une isolation rigoureuse des droits grâce à un **contrôle d'accès basé sur les rôles (RBAC) à quatre niveaux** ?
+
+## 3. Objectifs
+
+- **Concevoir une architecture web modulaire et maintenable** autour de `Django` et `Python`.
+- **Modéliser une base de données relationnelle cohérente** prenant en charge l'inventaire des équipements IoT, leurs données d'état et les profils utilisateurs.
+- **Implémenter une politique de sécurité RBAC à 4 niveaux** gouvernant l'accès aux vues de visualisation comme aux opérations d'administration.
+- **Coordonner le développement en équipe** en séparant proprement les responsabilités entre le schéma de données, la logique métier et l'intégration `HTML/CSS`.
+
+## 4. Architecture et méthodologie
+
+L'application repose sur l'architecture **MVT (*Model-View-Template*)** de `Django`, enrichie d'une couche de contrôle de permissions transversale :
+
+1. **Couche de persistance relationnelle** : définition des schémas de tables gérant les équipements IoT, leurs attributs techniques et les relations avec les niveaux d'habilitation.
+2. **Couche de sécurité RBAC (4 niveaux)** : filtrage des requêtes et protection des routes côté serveur afin que chaque profil n'accède qu'aux fonctionnalités et périmètres autorisés.
+3. **Modules de visualisation et d'administration** : séparation nette entre les tableaux de consultation de l'état du parc et les interfaces de gestion réservées aux niveaux supérieurs.
+
+## 5. Réalisation technique
+
+- **Backend & Architecture logicielle (`Python`, `Django`)** :
+  - Structuration du projet en composants découplés facilitant le développement parallèle en équipe.
+  - Utilisation de l'ORM Django pour sécuriser les requêtes vers la **base de données relationnelle** et prévenir les injections SQL.
+- **Sécurité et contrôle d'accès (`RBAC à 4 niveaux`)** :
+  - Définition de quatre échelons de privilèges distincts.
+  - Application de décorateurs et de contrôles d'accès sur les vues et les actions d'administration pour empêcher toute élévation de privilèges.
+- **Interfaces de visualisation et d'administration (`HTML/CSS`)** :
+  - Conception de vues claires pour suivre l'état des équipements IoT et administrer la plateforme.
+
+## 6. Expérimentations et résultats disponibles
+
+- **Validation fonctionnelle du modèle RBAC à 4 niveaux** : vérification des parcours utilisateurs et du cloisonnement effectif des actions sensibles d'administration par rapport aux profils de simple consultation.
+- **Intégration complète en équipe** : livraison d'une plateforme fonctionnelle réunissant persistance relationnelle, modules de visualisation IoT et panneau d'administration.
+
+## 7. Difficultés et enseignements
+
+- **Conception d'un RBAC sans duplication de code** : maintenir quatre niveaux d'accès distincts exige de centraliser les règles d'autorisation dans le backend plutôt que de disperser des conditions dans les gabarits d'affichage.
+- **Synchronisation du travail en équipe** : la définition en amont du schéma relationnel et des contrats entre vues Django et templates HTML/CSS s'est avérée déterminante pour assurer une intégration fluide.
+
+## 8. Technologies
+
+`Django` • `Python` • `HTML/CSS` • `Base de données relationnelle` • `Sécurité RBAC`
+
+## 9. Code source ou démonstration
+
+Les détails d'architecture et de modélisation relationnelle peuvent être présentés sur demande.

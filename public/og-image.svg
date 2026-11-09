@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" fill="none">
+  <rect width="1200" height="630" fill="#090D14"/>
+  <g opacity="0.08" stroke="#F5F7FA" stroke-width="1">
+    <line x1="0" y1="90" x2="1200" y2="90"/>
+    <line x1="0" y1="180" x2="1200" y2="180"/>
+    <line x1="0" y1="270" x2="1200" y2="270"/>
+    <line x1="0" y1="360" x2="1200" y2="360"/>
+    <line x1="0" y1="450" x2="1200" y2="450"/>
+    <line x1="0" y1="540" x2="1200" y2="540"/>
+    <line x1="150" y1="0" x2="150" y2="630"/>
+    <line x1="300" y1="0" x2="300" y2="630"/>
+    <line x1="450" y1="0" x2="450" y2="630"/>
+    <line x1="600" y1="0" x2="600" y2="630"/>
+    <line x1="750" y1="0" x2="750" y2="630"/>
+    <line x1="900" y1="0" x2="900" y2="630"/>
+    <line x1="1050" y1="0" x2="1050" y2="630"/>
+  </g>
+  <rect x="64" y="64" width="1072" height="502" rx="24" fill="#111827" stroke="#60A5FA" stroke-opacity="0.28" stroke-width="2"/>
+  <rect x="112" y="122" width="380" height="38" rx="19" fill="#1A2333" stroke="#22D3EE" stroke-opacity="0.4"/>
+  <circle cx="136" cy="141" r="5" fill="#22D3EE"/>
+  <text x="154" y="146" fill="#F5F7FA" font-family="monospace" font-size="15" font-weight="600" letter-spacing="1">RECHERCHE DE STAGE DE FIN D'ÉTUDES</text>
+  <text x="112" y="245" fill="#F5F7FA" font-family="sans-serif" font-size="68" font-weight="700" letter-spacing="-1">Emine AGATT</text>
+  <text x="112" y="305" fill="#60A5FA" font-family="sans-serif" font-size="30" font-weight="600">Ingénieur en formation | Data Science &amp; Intelligence Artificielle</text>
+  <text x="112" y="370" fill="#A0AEC0" font-family="sans-serif" font-size="22">CY Tech (2024–2027) • Mathématiques appliquées &amp; Intelligence Artificielle</text>
+  <text x="112" y="408" fill="#A0AEC0" font-family="sans-serif" font-size="22">Machine Learning • Deep Learning • Computer Vision • Big Data • Traitement du Signal</text>
+  <line x1="112" y1="458" x2="1088" y2="458" stroke="#F5F7FA" stroke-opacity="0.1"/>
+  <text x="112" y="502" fill="#22D3EE" font-family="monospace" font-size="18">TOP 2 PROMOTION CY TECH (1RE &amp; 2E ANNÉES)  •  BNP PARIBAS CIB  •  5 CERTIFICATIONS IBM</text>
+</svg>

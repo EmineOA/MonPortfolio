@@ -1,0 +1,188 @@
+---
+import { profileConfig } from '@/config/profile';
+import { uiStrings, type Locale } from '@/config/i18n';
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = 'fr' } = Astro.props;
+const t = uiStrings[locale];
+const { contact } = profileConfig;
+---
+
+<section
+  id="contact"
+  class="scroll-mt-20 py-20 sm:py-24"
+  aria-labelledby="contact-heading"
+>
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+    <div class="tech-card relative overflow-hidden p-6 sm:p-10 lg:p-12">
+      <!-- Subtle top gradient line -->
+      <div
+        class="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-accent-primary via-accent-secondary to-transparent"
+        aria-hidden="true"
+      >
+      </div>
+
+      <div class="grid gap-10 lg:grid-cols-12">
+        <!-- Left column: Pitch & Context (6 cols) -->
+        <div class="lg:col-span-6 flex flex-col justify-between">
+          <div>
+            <span class="section-eyebrow">
+              <span class="h-1.5 w-1.5 rounded-full bg-accent-secondary"></span>
+              <span>{t.sections.contactEyebrow}</span>
+            </span>
+
+            <h2 id="contact-heading" class="mt-3 section-heading">
+              {t.sections.contactTitle}
+            </h2>
+
+            <p class="mt-4 text-base leading-relaxed text-text-secondary">
+              Vous recrutez un stagiaire de fin d’études en <strong class="text-text-primary">Data Science, Machine Learning ou Intelligence Artificielle</strong> au sein d’une banque, d’un cabinet de conseil ou d’une direction technologique ? Échangeons sur vos enjeux techniques et analytiques.
+            </p>
+          </div>
+
+          <div class="mt-8 flex flex-wrap items-center gap-3.5">
+            <a
+              href={contact.linkedinUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 rounded-lg bg-accent-primary px-5 py-3 text-sm font-semibold text-bg-primary transition-all hover:bg-accent-primary/90"
+            >
+              <span>Contacter sur LinkedIn</span>
+              <span aria-hidden="true">↗</span>
+            </a>
+
+            {contact.email.value && (
+              <a
+                href={`mailto:${contact.email.value}`}
+                class="inline-flex items-center gap-2 rounded-lg border border-white/[0.14] bg-bg-elevated px-5 py-3 text-sm font-semibold text-text-primary transition-colors hover:border-accent-primary"
+              >
+                <span>Envoyer un email</span>
+              </a>
+            )}
+
+            {contact.cvPdfPath.value && (
+              <a
+                href={contact.cvPdfPath.value}
+                download
+                class="inline-flex items-center gap-2 rounded-lg border border-accent-secondary/40 bg-bg-surface px-4 py-3 text-sm font-medium text-text-primary transition-colors hover:border-accent-secondary"
+              >
+                <span>Télécharger mon CV (PDF)</span>
+              </a>
+            )}
+          </div>
+        </div>
+
+        <!-- Right column: Structured Contact & Availability Details (6 cols) -->
+        <div class="lg:col-span-6">
+          <div class="rounded-xl border border-white/[0.08] bg-bg-primary/80 p-5 sm:p-6">
+            <h3 class="font-mono text-xs font-semibold uppercase tracking-wider text-text-muted">
+              Coordonnées &amp; Paramètres de stage
+            </h3>
+
+            <dl class="mt-4 divide-y divide-white/[0.07] text-sm">
+              <!-- LinkedIn (Verified) -->
+              <div class="py-3.5 first:pt-0 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
+                <dt class="font-mono text-xs text-text-secondary">LinkedIn</dt>
+                <dd>
+                  <a
+                    href={contact.linkedinUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="font-mono text-xs font-semibold text-accent-primary hover:underline"
+                  >
+                    linkedin.com/in/emine-agatt ↗
+                  </a>
+                </dd>
+              </div>
+
+              <!-- Email -->
+              <div class="py-3.5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
+                <dt class="font-mono text-xs text-text-secondary">Email professionnel</dt>
+                <dd>
+                  {contact.email.value ? (
+                    <a
+                      href={`mailto:${contact.email.value}`}
+                      class="font-mono text-xs font-semibold text-text-primary hover:text-accent-primary"
+                    >
+                      {contact.email.value}
+                    </a>
+                  ) : (
+                    <span class="pending-pill">{contact.email.placeholder}</span>
+                  )}
+                </dd>
+              </div>
+
+              <!-- GitHub -->
+              <div class="py-3.5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
+                <dt class="font-mono text-xs text-text-secondary">GitHub</dt>
+                <dd>
+                  {contact.githubUrl.value ? (
+                    <a
+                      href={contact.githubUrl.value}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="font-mono text-xs font-semibold text-accent-primary hover:underline"
+                    >
+                      {contact.githubUrl.value} ↗
+                    </a>
+                  ) : (
+                    <span class="pending-pill">{contact.githubUrl.placeholder}</span>
+                  )}
+                </dd>
+              </div>
+
+              <!-- CV PDF -->
+              <div class="py-3.5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
+                <dt class="font-mono text-xs text-text-secondary">CV téléchargeable</dt>
+                <dd>
+                  {contact.cvPdfPath.value ? (
+                    <a
+                      href={contact.cvPdfPath.value}
+                      download
+                      class="font-mono text-xs font-semibold text-accent-secondary hover:underline"
+                    >
+                      Télécharger le CV (PDF) ↓
+                    </a>
+                  ) : (
+                    <span class="pending-pill">{contact.cvPdfPath.placeholder}</span>
+                  )}
+                </dd>
+              </div>
+
+              <!-- Disponibilité du stage -->
+              <div class="py-3.5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
+                <dt class="font-mono text-xs text-text-secondary">Disponibilité du stage</dt>
+                <dd>
+                  {contact.internshipAvailability.value ? (
+                    <span class="font-mono text-xs font-semibold text-text-primary">
+                      {contact.internshipAvailability.value}
+                    </span>
+                  ) : (
+                    <span class="pending-pill">{contact.internshipAvailability.placeholder}</span>
+                  )}
+                </dd>
+              </div>
+
+              <!-- Mobilité géographique -->
+              <div class="py-3.5 last:pb-0 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
+                <dt class="font-mono text-xs text-text-secondary">Mobilité géographique</dt>
+                <dd>
+                  {contact.mobility.value ? (
+                    <span class="font-mono text-xs font-semibold text-text-primary">
+                      {contact.mobility.value}
+                    </span>
+                  ) : (
+                    <span class="pending-pill">{contact.mobility.placeholder}</span>
+                  )}
+                </dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

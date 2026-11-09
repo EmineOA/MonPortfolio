@@ -1,0 +1,88 @@
+export type Locale = 'fr' | 'en';
+
+export const uiStrings = {
+  fr: {
+    nav: {
+      projects: 'Projets',
+      experience: 'Parcours',
+      skills: 'Compétences',
+      contact: 'Contact',
+      allProjects: 'Tous les projets',
+      backHome: 'Retour à l’accueil',
+    },
+    hero: {
+      ctaProjects: 'Découvrir mes projets',
+      ctaCv: 'Télécharger mon CV',
+      ctaContact: 'Me contacter',
+      academicHighlight: 'CY Tech (2024–2027)',
+      rankingHighlight: 'Top 2 de promotion (1re & 2e années)',
+      experienceHighlight: 'BNP Paribas CIB',
+      certificationsHighlight: '5 Certifications IBM',
+    },
+    sections: {
+      projectsEyebrow: '01 // RÉALISATIONS TECHNIQUES & ÉTUDES DE CAS',
+      projectsTitle: 'Projets sélectionnés',
+      projectsSubtitle:
+        'Études de cas couvrant le Deep Learning, la Computer Vision, le calcul distribué Apache Spark, le traitement numérique du signal et l’ingénierie logicielle.',
+      priorityLabel: 'Projet prioritaire — Étude de cas Data & IA',
+      secondaryLabel: 'Ingénierie logicielle & Architecture système',
+      experienceEyebrow: '02 // TRAJECTOIRE ACADÉMIQUE & PROFESSIONNELLE',
+      experienceTitle: 'Parcours, distinctions & certifications',
+      skillsEyebrow: '03 // COMPÉTENCES TECHNIQUES DOCUMENTÉES',
+      skillsTitle: 'Expertises structurées par domaine',
+      contactEyebrow: '04 // OPPORTUNITÉS & RECRUTEMENT',
+      contactTitle: 'Contact & recherche de stage de fin d’études',
+    },
+    projectPage: {
+      caseStudyBadge: 'Étude de cas technique',
+      tocTitle: 'Structure de l’étude',
+      techStackTitle: 'Technologies mobilisées',
+      metricsTitle: 'Résultats & métriques documentés',
+      sourceCodeTitle: 'Code source & démonstration',
+      nextProject: 'Projet suivant',
+      prevProject: 'Projet précédent',
+    },
+  },
+  en: {
+    nav: {
+      projects: 'Projects',
+      experience: 'Background',
+      skills: 'Skills',
+      contact: 'Contact',
+      allProjects: 'All projects',
+      backHome: 'Back to home',
+    },
+    hero: {
+      ctaProjects: 'Explore my projects',
+      ctaCv: 'Download Resume',
+      ctaContact: 'Get in touch',
+      academicHighlight: 'CY Tech (2024–2027)',
+      rankingHighlight: 'Top 2 in class (Years 1 & 2)',
+      experienceHighlight: 'BNP Paribas CIB',
+      certificationsHighlight: '5 IBM Certifications',
+    },
+    sections: {
+      projectsEyebrow: '01 // TECHNICAL CASE STUDIES',
+      projectsTitle: 'Selected Projects',
+      projectsSubtitle:
+        'Case studies spanning Deep Learning, Computer Vision, Apache Spark distributed computing, digital signal processing, and software engineering.',
+      priorityLabel: 'Priority Project — Data & AI Case Study',
+      secondaryLabel: 'Software Engineering & Systems Architecture',
+      experienceEyebrow: '02 // ACADEMIC & PROFESSIONAL TRACK',
+      experienceTitle: 'Education, honors & certifications',
+      skillsEyebrow: '03 // DOCUMENTED TECHNICAL SKILLS',
+      skillsTitle: 'Core competencies by domain',
+      contactEyebrow: '04 // INTERNSHIP & RECRUITMENT',
+      contactTitle: 'Contact & final-year internship search',
+    },
+    projectPage: {
+      caseStudyBadge: 'Technical Case Study',
+      tocTitle: 'Case Study Structure',
+      techStackTitle: 'Technologies Used',
+      metricsTitle: 'Documented Results & Metrics',
+      sourceCodeTitle: 'Source Code & Demo',
+      nextProject: 'Next project',
+      prevProject: 'Previous project',
+    },
+  },
+} as const;
