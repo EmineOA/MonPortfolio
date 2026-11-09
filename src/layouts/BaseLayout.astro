@@ -14,7 +14,7 @@ interface Props {
 
 const {
   title = `${profileConfig.identity.fullName} — ${profileConfig.identity.headline}`,
-  description = profileConfig.identity.subheadline,
+  description = profileConfig.identity.heroIntro,
   locale = 'fr',
   canonicalPath = Astro.url.pathname,
 } = Astro.props;

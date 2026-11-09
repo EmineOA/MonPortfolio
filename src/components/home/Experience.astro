@@ -1,0 +1,55 @@
+---
+import { profileConfig } from '@/config/profile';
+import { uiStrings, type Locale } from '@/config/i18n';
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = 'fr' } = Astro.props;
+const t = uiStrings[locale];
+const { experience } = profileConfig;
+---
+
+<section id="experience" class="scroll-mt-24 border-t border-white/[0.06] py-20 sm:py-24" aria-labelledby="experience-heading">
+  <div class="mx-auto grid max-w-6xl gap-10 px-4 sm:px-6 lg:grid-cols-12 lg:px-8">
+    <div class="lg:col-span-4">
+      <p class="section-eyebrow">{t.sections.experienceEyebrow}</p>
+      <h2 id="experience-heading" class="section-heading mt-3">{t.sections.experienceTitle}</h2>
+    </div>
+
+    <div class="space-y-14 lg:col-span-8">
+      {experience.map((exp) => (
+        <article>
+          <p class="font-mono text-xs text-text-muted">
+            {exp.period.value} · {exp.location}
+          </p>
+          <h3 class="mt-2 font-display text-2xl font-semibold text-text-primary">{exp.company}</h3>
+          {exp.role.value && <p class="mt-1 font-medium text-accent-primary">{exp.role.value}</p>}
+          {exp.team && <p class="mt-1 text-sm text-text-muted">{exp.team}</p>}
+
+          {exp.homeSummary && (
+            <p class="mt-5 max-w-2xl leading-relaxed text-text-secondary">{exp.homeSummary}</p>
+          )}
+
+          {exp.homeHighlights && (
+            <ul class="mt-6 max-w-2xl space-y-5 border-l border-white/10 pl-5">
+              {exp.homeHighlights.map((item) => (
+                <li>
+                  <p class="text-sm font-medium text-text-primary">{item.title}</p>
+                  <p class="mt-1 text-sm leading-relaxed text-text-secondary">{item.detail}</p>
+                </li>
+              ))}
+            </ul>
+          )}
+
+          {exp.detailPath && (
+            <a href={exp.detailPath} class="text-link mt-7">
+              {t.sections.experienceDetail} <span aria-hidden="true">→</span>
+            </a>
+          )}
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

@@ -12,6 +12,12 @@ const projectsCollection = defineCollection({
     workMode: z.string(),
     myRoleSummary: z.string(),
     priority: z.boolean().default(false),
+    // Champs de présentation pour les cartes de la homepage et l'index /projets/
+    featured: z.boolean().default(false),
+    cardTitle: z.string().optional(),
+    cardContext: z.string().optional(),
+    cardRole: z.string().optional(),
+    cardTech: z.array(z.string()).max(4).optional(),
     summary: z.string(),
     technologies: z.array(z.string()),
     highlights: z.array(z.string()),

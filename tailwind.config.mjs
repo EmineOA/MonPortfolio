@@ -13,7 +13,7 @@ export default {
         text: {
           primary: '#F5F7FA',
           secondary: '#A0AEC0',
-          muted: '#718096',
+          muted: '#8B9BB4',
         },
         accent: {
           primary: '#60A5FA',

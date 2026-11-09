@@ -1,275 +1,32 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import ProjectCard from '@/components/projects/ProjectCard.astro';
 import { uiStrings, type Locale } from '@/config/i18n';
 
 interface Props {
-  projects: CollectionEntry<'projects'>[];
+  featured: CollectionEntry<'projects'>[];
   locale?: Locale;
 }
 
-const { projects, locale = 'fr' } = Astro.props;
+const { featured, locale = 'fr' } = Astro.props;
 const t = uiStrings[locale];
-
-const sortedProjects = [...projects].sort((a, b) => a.data.order - b.data.order);
-const priorityProjects = sortedProjects.filter((p) => p.data.priority);
-const secondaryProjects = sortedProjects.filter((p) => !p.data.priority);
-
-const priorityCount = String(priorityProjects.length).padStart(2, '0');
-const totalCount = String(sortedProjects.length).padStart(2, '0');
-const secondaryStart = String(priorityProjects.length + 1).padStart(2, '0');
 ---
 
-<section
-  id="projets"
-  class="scroll-mt-20 border-b border-white/[0.07] py-20 sm:py-24"
-  aria-labelledby="projects-heading"
->
+<section id="projets" class="scroll-mt-24 py-16 sm:py-20" aria-labelledby="projects-heading">
   <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-    <!-- Section Header -->
-    <div class="max-w-3xl">
-      <span class="section-eyebrow">
-        <span class="h-1.5 w-1.5 rounded-full bg-accent-primary"></span>
-        <span>{t.sections.projectsEyebrow}</span>
-      </span>
-      <h2 id="projects-heading" class="mt-3 section-heading">
-        {t.sections.projectsTitle}
-      </h2>
-      <p class="mt-4 text-base leading-relaxed text-text-secondary sm:text-lg">
-        {t.sections.projectsSubtitle}
-      </p>
+    <div class="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+      <div>
+        <p class="section-eyebrow">{t.sections.projectsEyebrow}</p>
+        <h2 id="projects-heading" class="section-heading mt-3">{t.sections.projectsTitle}</h2>
+        <p class="section-lead mt-4">{t.sections.projectsLead}</p>
+      </div>
+      <a href="/projets/" class="text-link shrink-0">
+        {t.sections.projectsAll} <span aria-hidden="true">→</span>
+      </a>
     </div>
 
-    <!-- Projets prioritaires (Data Science, NLP/LLM, Vision, Big Data, Signal) -->
-    <div class="mt-12">
-      <div class="mb-5 flex items-center justify-between">
-        <span class="font-mono text-xs uppercase tracking-wider text-accent-secondary">
-          ★ {t.sections.priorityLabel}
-        </span>
-        <span class="font-mono text-xs text-text-muted">01 — {priorityCount}</span>
-      </div>
-
-      <div class="space-y-8">
-        {priorityProjects.map((project) => (
-          <article class="tech-card-interactive relative overflow-hidden p-6 sm:p-8">
-            <!-- Top accent bar -->
-            <div
-              class="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-accent-primary via-accent-secondary to-transparent opacity-80"
-              aria-hidden="true"
-            />
-
-            <div class="grid gap-8 lg:grid-cols-12">
-              <!-- Main Case Study Summary (7 cols) -->
-              <div class="lg:col-span-7 flex flex-col justify-between">
-                <div>
-                  <div class="flex flex-wrap items-center gap-2">
-                    <span class="rounded bg-accent-primary/15 px-2.5 py-0.5 font-mono text-xs font-semibold text-accent-primary border border-accent-primary/30">
-                      {project.data.code}
-                    </span>
-                    <span class="font-mono text-xs text-accent-secondary">
-                      {project.data.domain}
-                    </span>
-                    <span class="rounded bg-bg-elevated px-2 py-0.5 font-mono text-[11px] text-text-secondary border border-white/[0.06]">
-                      {project.data.workMode}
-                    </span>
-                  </div>
-
-                  <h3 class="mt-3 font-display text-xl font-bold text-text-primary sm:text-2xl">
-                    <a
-                      href={`/projets/${project.slug}/`}
-                      class="hover:text-accent-primary transition-colors"
-                    >
-                      {project.data.title}
-                    </a>
-                  </h3>
-
-                  <p class="mt-3 text-sm leading-relaxed text-text-secondary sm:text-base">
-                    {project.data.summary}
-                  </p>
-
-                  <p class="mt-2.5 font-mono text-xs text-text-muted">
-                    <strong class="text-text-secondary">Rôle :</strong> {project.data.myRoleSummary}
-                  </p>
-
-                  <!-- Documented Highlights -->
-                  <ul class="mt-4 space-y-2">
-                    {project.data.highlights.map((item) => (
-                      <li class="flex items-start gap-2.5 text-sm text-text-primary/90">
-                        <span class="mt-1 font-mono text-xs text-accent-primary" aria-hidden="true">
-                          ▹
-                        </span>
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <!-- Tech Stack & Action Links -->
-                <div class="mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-white/[0.07] pt-5">
-                  <div class="flex flex-wrap gap-1.5" aria-label="Technologies utilisées">
-                    {project.data.technologies.map((tech) => (
-                      <span class="tech-badge">{tech}</span>
-                    ))}
-                  </div>
-
-                  <div class="flex flex-wrap items-center gap-2.5">
-                    {project.data.repositoryUrl && (
-                      <a
-                        href={project.data.repositoryUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="inline-flex items-center gap-1.5 rounded-lg border border-white/[0.12] bg-bg-elevated px-3.5 py-2 font-mono text-xs font-medium text-text-primary transition-colors hover:border-accent-primary/50"
-                      >
-                        <span>GitHub</span>
-                        <span aria-hidden="true">↗</span>
-                      </a>
-                    )}
-                    <a
-                      href={`/projets/${project.slug}/`}
-                      class="inline-flex items-center gap-2 rounded-lg bg-accent-primary/15 border border-accent-primary/40 px-4 py-2 font-mono text-xs font-semibold text-accent-primary transition-all hover:bg-accent-primary hover:text-bg-primary"
-                    >
-                      <span>Lire l’étude de cas</span>
-                      <span aria-hidden="true">→</span>
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Right Column: Documented Metrics & Pipeline Preview (5 cols) -->
-              <div class="lg:col-span-5 flex flex-col justify-between rounded-xl border border-white/[0.07] bg-bg-primary/75 p-5">
-                <div>
-                  <div class="flex items-center justify-between border-b border-white/[0.07] pb-2.5">
-                    <span class="font-mono text-[11px] uppercase tracking-wider text-text-muted">
-                      Repères &amp; Résultats Documentés
-                    </span>
-                    <span class="font-mono text-[11px] text-accent-secondary">
-                      FACTUEL
-                    </span>
-                  </div>
-
-                  {project.data.metrics && (
-                    <dl class="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
-                      {project.data.metrics.map((metric) => (
-                        <div class="rounded-lg border border-white/[0.06] bg-bg-surface/90 p-3">
-                          <dt class="font-mono text-[11px] text-text-secondary">
-                            {metric.label}
-                          </dt>
-                          <dd class="mt-1 font-mono text-base font-semibold text-accent-primary">
-                            {metric.value}
-                          </dd>
-                          {metric.detail && (
-                            <p class="mt-1 text-[11px] leading-snug text-text-muted">
-                              {metric.detail}
-                            </p>
-                          )}
-                        </div>
-                      ))}
-                    </dl>
-                  )}
-                </div>
-
-                <!-- Mini Pipeline Steps Preview -->
-                <div class="mt-5 border-t border-white/[0.06] pt-3.5">
-                  <span class="block font-mono text-[11px] uppercase tracking-wider text-text-muted">
-                    Architecture méthodologique
-                  </span>
-                  <div class="mt-2 flex flex-wrap items-center gap-1.5">
-                    {project.data.architectureSteps.map((step, index) => (
-                      <>
-                        <span class="rounded bg-bg-elevated px-2 py-1 font-mono text-[11px] text-text-secondary border border-white/[0.05]">
-                          {step.step}. {step.title.split(' ')[0]}
-                        </span>
-                        {index < project.data.architectureSteps.length - 1 && (
-                          <span class="font-mono text-xs text-accent-primary/60" aria-hidden="true">
-                            →
-                          </span>
-                        )}
-                      </>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </article>
-        ))}
-      </div>
-    </div>
-
-    <!-- Secondary Projects (Ingénierie logicielle & Architecture système) -->
-    <div class="mt-14">
-      <div class="mb-5 flex items-center justify-between">
-        <span class="font-mono text-xs uppercase tracking-wider text-text-secondary">
-          ◆ {t.sections.secondaryLabel}
-        </span>
-        <span class="font-mono text-xs text-text-muted">{secondaryStart} — {totalCount}</span>
-      </div>
-
-      <div class="grid gap-6 md:grid-cols-2">
-        {secondaryProjects.map((project) => (
-          <article class="tech-card-interactive flex flex-col justify-between p-6 sm:p-7">
-            <div>
-              <div class="flex flex-wrap items-center justify-between gap-2">
-                <div class="flex items-center gap-2">
-                  <span class="rounded bg-bg-elevated px-2.5 py-0.5 font-mono text-xs font-semibold text-accent-primary border border-white/[0.08]">
-                    {project.data.code}
-                  </span>
-                  <span class="font-mono text-xs text-text-muted">
-                    {project.data.domain}
-                  </span>
-                </div>
-                <span class="rounded bg-bg-elevated px-2 py-0.5 font-mono text-[11px] text-text-secondary border border-white/[0.06]">
-                  {project.data.workMode}
-                </span>
-              </div>
-
-              <h3 class="mt-3.5 font-display text-xl font-bold text-text-primary">
-                <a
-                  href={`/projets/${project.slug}/`}
-                  class="hover:text-accent-primary transition-colors"
-                >
-                  {project.data.title}
-                </a>
-              </h3>
-
-              <p class="mt-2.5 text-sm leading-relaxed text-text-secondary">
-                {project.data.summary}
-              </p>
-
-              <p class="mt-2 font-mono text-xs text-text-muted">
-                <strong class="text-text-secondary">Rôle :</strong> {project.data.myRoleSummary}
-              </p>
-
-              <ul class="mt-4 space-y-1.5">
-                {project.data.highlights.map((item) => (
-                  <li class="flex items-start gap-2 text-xs sm:text-sm text-text-primary/90">
-                    <span class="mt-0.5 font-mono text-xs text-accent-primary" aria-hidden="true">
-                      ▹
-                    </span>
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div class="mt-6 border-t border-white/[0.07] pt-4">
-              <div class="flex flex-wrap gap-1.5">
-                {project.data.technologies.map((tech) => (
-                  <span class="tech-badge">{tech}</span>
-                ))}
-              </div>
-
-              <div class="mt-4 flex items-center justify-end">
-                <a
-                  href={`/projets/${project.slug}/`}
-                  class="inline-flex items-center gap-1.5 font-mono text-xs font-semibold text-accent-primary hover:underline"
-                >
-                  <span>Consulter la fiche détaillée</span>
-                  <span aria-hidden="true">→</span>
-                </a>
-              </div>
-            </div>
-          </article>
-        ))}
-      </div>
+    <div class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {featured.map((project) => <ProjectCard project={project} locale={locale} />)}
     </div>
   </div>
 </section>

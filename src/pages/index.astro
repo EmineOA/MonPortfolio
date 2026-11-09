@@ -3,17 +3,20 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Hero from '@/components/home/Hero.astro';
 import FeaturedProjects from '@/components/home/FeaturedProjects.astro';
-import ExperienceTimeline from '@/components/home/ExperienceTimeline.astro';
+import Experience from '@/components/home/Experience.astro';
+import Education from '@/components/home/Education.astro';
 import SkillsMatrix from '@/components/home/SkillsMatrix.astro';
 import ContactSection from '@/components/home/ContactSection.astro';
 
 const projects = await getCollection('projects');
+const featured = projects.filter((p) => p.data.featured).sort((a, b) => a.data.order - b.data.order);
 ---
 
 <BaseLayout>
-  <Hero locale="fr" />
-  <FeaturedProjects projects={projects} locale="fr" />
-  <ExperienceTimeline locale="fr" />
+  <Hero featured={featured} locale="fr" />
+  <FeaturedProjects featured={featured} locale="fr" />
+  <Experience locale="fr" />
+  <Education locale="fr" />
   <SkillsMatrix locale="fr" />
   <ContactSection locale="fr" />
 </BaseLayout>

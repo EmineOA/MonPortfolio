@@ -1,0 +1,62 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout
+  title="Projets — Emine AGATT"
+  description="Projets en NLP, vision par ordinateur, Big Data, traitement du signal et ingénierie logicielle réalisés par Emine AGATT, élève ingénieur à CY Tech."
+  canonicalPath="/projets/"
+>
+  <section class="mx-auto max-w-6xl px-4 pb-24 pt-14 sm:px-6 sm:pt-20 lg:px-8">
+    <nav aria-label="Fil d'Ariane" class="font-mono text-xs text-text-muted">
+      <a href="/" class="hover:text-accent-primary">Accueil</a>
+      <span aria-hidden="true"> / </span>
+      <span class="text-text-secondary">Projets</span>
+    </nav>
+
+    <h1 class="mt-6 font-display text-4xl font-bold tracking-tight text-text-primary sm:text-5xl">Projets</h1>
+    <p class="section-lead mt-4">
+      Projets académiques en NLP, vision par ordinateur, traitement distribué, traitement du signal et ingénierie
+      logicielle. Chaque fiche précise le contexte, mon rôle et les résultats mesurés.
+    </p>
+
+    <ol class="mt-14 border-t border-white/[0.06]">
+      {projects.map((project) => {
+        const tech = project.data.cardTech ?? project.data.technologies.slice(0, 4);
+        return (
+          <li class="group relative grid gap-3 border-b border-white/[0.06] py-8 md:grid-cols-12 md:gap-8">
+            <p class="font-mono text-xs text-text-muted md:col-span-3 md:pt-1.5">
+              {project.data.cardContext ?? project.data.projectContext}
+            </p>
+            <div class="md:col-span-9">
+              <h2 class="font-display text-xl font-semibold text-text-primary sm:text-2xl">
+                <a href={`/projets/${project.slug}/`} class="after:absolute after:inset-0 group-hover:text-accent-primary">
+                  {project.data.title}
+                </a>
+              </h2>
+              <p class="mt-2 max-w-2xl text-sm leading-relaxed text-text-secondary sm:text-base">{project.data.summary}</p>
+              <div class="mt-4 flex flex-wrap items-center gap-x-5 gap-y-3">
+                <ul class="flex flex-wrap gap-1.5" aria-label="Technologies principales">
+                  {tech.map((item) => <li class="tech-tag">{item}</li>)}
+                </ul>
+                {project.data.repositoryUrl && (
+                  <a
+                    href={project.data.repositoryUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="relative z-10 text-sm text-text-secondary transition-colors hover:text-text-primary"
+                  >
+                    GitHub <span aria-hidden="true">↗</span><span class="sr-only">(nouvel onglet)</span>
+                  </a>
+                )}
+              </div>
+            </div>
+          </li>
+        );
+      })}
+    </ol>
+  </section>
+</BaseLayout>

@@ -31,6 +31,17 @@ export interface ProfessionalProject {
   technologies: string[];
 }
 
+export interface ExperienceHighlight {
+  title: string;
+  detail: string;
+}
+
+export interface HomeSkillDomain {
+  title: string;
+  items: string[];
+  evidence: { label: string; href: string }[];
+}
+
 export interface ExperienceItem {
   id: string;
   company: string;
@@ -41,6 +52,9 @@ export interface ExperienceItem {
   duration?: string;
   contractualTitle?: string;
   summary?: string;
+  homeSummary?: string;
+  homeHighlights?: ExperienceHighlight[];
+  detailPath?: string;
   role: PendingField<string>;
   period: PendingField<string>;
   missions: PendingField<string[], string[]>;
@@ -81,6 +95,11 @@ export const profileConfig = {
     subheadline:
       "Élève ingénieur à CY Tech, spécialisé en mathématiques appliquées et intelligence artificielle, je développe des solutions associant modélisation, apprentissage automatique et ingénierie logicielle. Je recherche un stage de fin d'études pour contribuer à des projets Data & IA à fort impact.",
     statusBadge: "Recherche de stage de fin d'études",
+    // Contenus du hero (homepage)
+    heroTitle: 'Mathématiques appliquées, Data Science & IA.',
+    heroIntro:
+      'Élève ingénieur à CY Tech, spécialisé en mathématiques appliquées et IA. Je travaille sur des projets en machine learning, NLP et ingénierie des données, avec une première expérience professionnelle chez BNP Paribas CIB.',
+    heroBadge: "Recherche de stage de fin d'études — 2027",
     targetEnvironments: [
       'Grandes entreprises & groupes technologiques',
       'Banques & institutions financières (CIB, Quantitative & AI teams)',
@@ -101,7 +120,7 @@ export const profileConfig = {
       placeholder: 'Email professionnel à renseigner',
     },
     githubUrl: {
-      value: null as string | null,
+      value: 'https://github.com/EmineOA' as string | null,
       placeholder: 'Profil GitHub à renseigner',
     },
     cvPdfPath: {
@@ -169,6 +188,21 @@ export const profileConfig = {
       contractualTitle: 'Stagiaire Chef de projet AML IT',
       summary:
         "Développement d'un framework d'évaluation d'Entity Resolution et contribution à la modélisation de données de paiement ISO 20022 pour les systèmes de lutte contre le blanchiment d'argent.",
+      homeSummary:
+        "Au sein de l'équipe AML IT Detection, développement Python d'outils d'évaluation et contribution à la modélisation des données de paiement utilisées par les systèmes de lutte contre le blanchiment d'argent.",
+      homeHighlights: [
+        {
+          title: 'Entity Resolution Evaluation — travail individuel principal',
+          detail:
+            "Framework Python évaluant la qualité des regroupements d'un modèle d'Entity Resolution : similarité textuelle, indicateurs statistiques intra/inter-groupes et expériences reproductibles.",
+        },
+        {
+          title: 'Modélisation de données ISO 20022 — en binôme',
+          detail:
+            'Analyse des schémas XML/XSD de 24 versions de messages et contribution à un modèle relationnel cible de 14 tables.',
+        },
+      ],
+      detailPath: '/experience/bnp-paribas-cib/',
       role: {
         value: 'Stagiaire Data Science & Data Engineering — AML IT',
         placeholder: '',
@@ -480,6 +514,45 @@ export const profileConfig = {
       ],
     },
   ] satisfies SkillCategory[],
+
+  /**
+   * Domaines affichés sur la homepage : technologies effectivement utilisées
+   * et renvoi vers les réalisations qui les démontrent.
+   */
+  homeSkills: [
+    {
+      title: 'Machine Learning & NLP',
+      items: ['Python', 'PyTorch', 'Hugging Face Transformers', 'TensorFlow / Keras', 'scikit-learn'],
+      evidence: [
+        { label: 'Brainmaxxing', href: '/projets/00-brainmaxxing-llm-tutor/' },
+        { label: 'Expressions faciales', href: '/projets/01-facial-expression-recognition/' },
+      ],
+    },
+    {
+      title: 'Ingénierie des données',
+      items: ['pandas', 'Polars', 'Apache Spark', 'Spark SQL', 'XML / XSD'],
+      evidence: [
+        { label: 'BNP Paribas CIB', href: '/experience/bnp-paribas-cib/' },
+        { label: 'Big Data et pollution urbaine', href: '/projets/02-urban-pollution-big-data/' },
+      ],
+    },
+    {
+      title: 'Mathématiques appliquées & signal',
+      items: ['Statistiques descriptives', 'Similarité textuelle', 'FFT / STFT', 'NumPy', 'SciPy'],
+      evidence: [
+        { label: 'Entity Resolution (BNP)', href: '/experience/bnp-paribas-cib/' },
+        { label: 'Séparation de sources audio', href: '/projets/03-audio-source-separation/' },
+      ],
+    },
+    {
+      title: 'Développement logiciel',
+      items: ['Java', 'Scala', 'Django', 'SQL / modélisation relationnelle', 'UML'],
+      evidence: [
+        { label: 'Plateforme IoT', href: '/projets/04-iot-management-platform/' },
+        { label: 'Gestion des déchets', href: '/projets/05-smart-waste-management/' },
+      ],
+    },
+  ] satisfies HomeSkillDomain[],
 
   languages: [
     { name: 'Français', level: 'Langue principale / Courant' },

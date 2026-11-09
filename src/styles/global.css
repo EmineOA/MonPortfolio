@@ -11,7 +11,7 @@
     --border-accent: rgba(96, 165, 250, 0.35);
     --text-primary: #F5F7FA;
     --text-secondary: #A0AEC0;
-    --text-muted: #718096;
+    --text-muted: #8B9BB4;
     --accent-primary: #60A5FA;
     --accent-secondary: #22D3EE;
     color-scheme: dark;
@@ -63,11 +63,24 @@
   }
 
   .section-eyebrow {
-    @apply inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.16em] text-accent-primary;
+    @apply font-mono text-xs text-accent-primary;
   }
 
   .section-heading {
-    @apply font-display text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-text-primary;
+    @apply font-display text-3xl sm:text-4xl font-semibold tracking-tight text-text-primary;
+  }
+
+  .section-lead {
+    @apply max-w-2xl text-base leading-relaxed text-text-secondary;
+  }
+
+  /* Petite étiquette technologique, plus légère que .tech-badge (cartes de la homepage) */
+  .tech-tag {
+    @apply inline-flex items-center rounded border border-white/[0.08] px-2 py-0.5 font-mono text-[11px] text-text-secondary;
+  }
+
+  .text-link {
+    @apply inline-flex items-center gap-1.5 text-sm font-medium text-accent-primary underline-offset-4 transition-colors hover:text-text-primary hover:underline;
   }
 
   .tech-badge {

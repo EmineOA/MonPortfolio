@@ -1,0 +1,48 @@
+---
+import { profileConfig } from '@/config/profile';
+import { uiStrings, type Locale } from '@/config/i18n';
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = 'fr' } = Astro.props;
+const t = uiStrings[locale];
+const { education, certifications, languages } = profileConfig;
+---
+
+<section id="parcours" class="scroll-mt-24 border-t border-white/[0.06] py-20 sm:py-24" aria-labelledby="education-heading">
+  <div class="mx-auto grid max-w-6xl gap-10 px-4 sm:px-6 lg:grid-cols-12 lg:px-8">
+    <div class="lg:col-span-4">
+      <p class="section-eyebrow">{t.sections.educationEyebrow}</p>
+      <h2 id="education-heading" class="section-heading mt-3">{t.sections.educationTitle}</h2>
+    </div>
+
+    <div class="grid gap-12 sm:grid-cols-2 lg:col-span-8">
+      <div>
+        <p class="font-mono text-xs text-text-muted">{education.period}</p>
+        <h3 class="mt-2 font-display text-2xl font-semibold text-text-primary">CY Tech</h3>
+        <p class="mt-1 text-text-secondary">
+          {education.degree}, {education.specialization.toLowerCase()}
+        </p>
+        <p class="mt-5 text-sm leading-relaxed text-text-secondary">
+          <span class="text-text-primary">Distinction :</span>
+          {education.distinction.toLowerCase()}.
+        </p>
+        <p class="mt-5 text-sm text-text-secondary">
+          <span class="text-text-primary">Langues :</span>
+          {languages.map((l) => l.name.toLowerCase()).join(', ')}
+        </p>
+      </div>
+
+      <div>
+        <h3 class="text-sm font-medium text-text-primary">{t.sections.certificationsTitle}</h3>
+        <ul class="mt-3 divide-y divide-white/[0.06] border-y border-white/[0.06]">
+          {certifications.map((cert) => (
+            <li class="py-3 text-sm text-text-secondary">{cert.title}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
