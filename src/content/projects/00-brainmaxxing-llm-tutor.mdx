@@ -1,0 +1,174 @@
+---
+order: 1
+code: "PRJ-01"
+title: "Brainmaxxing — Tuteur pédagogique basé sur un LLM"
+shortTitle: "Moteur d'inférence Qwen2.5-3B-Instruct, Prompt Engineering & Baseline conversationnelle"
+domain: "NLP / Transformers / Intelligence artificielle"
+projectContext: "Projet académique"
+workMode: "Projet collectif (6 personnes)"
+myRoleSummary: "Responsable du Bloc B (Epics E2–E3) : étude du Transformer, développement du moteur d'inférence et de la baseline conversationnelle, stratégies de décodage et comparaison de prompts."
+priority: true
+summary: "Développement d'un agent conversationnel fondé sur Qwen2.5-3B-Instruct, conçu pour évaluer les réponses ouvertes d'étudiants et leur fournir un retour pédagogique adapté."
+technologies:
+  - "Python"
+  - "Hugging Face Transformers"
+  - "PyTorch"
+  - "Qwen2.5-3B-Instruct"
+  - "Prompt Engineering"
+  - "LoRA / QLoRA (collectif)"
+  - "Gradio (collectif)"
+  - "unittest"
+highlights:
+  - "Responsable du Bloc B (E2–E3) : moteur LLM, stratégies de décodage (greedy, température, top-k, top-p) et API d'inférence commune"
+  - "Construction dynamique des prompts pédagogiques (criteria vs few-shot), gestion de l'historique borné et parsing strict des verdicts"
+  - "Comparaison expérimentale sur jeu de développement (9 cas) : passage de 4/9 (criteria) à 6/9 (few-shot) verdicts et formats corrects"
+  - "Architecture collective articulée autour de 6 concepts, 17 questions ouvertes et 1 003 exemples supervisés"
+metrics:
+  - label: "Corpus pédagogique (Bloc A)"
+    value: "6 concepts · 17 questions"
+    detail: "Mathématiques (8 questions) et Philosophie (9 questions)"
+  - label: "Dataset supervisé (Bloc C)"
+    value: "1 003 exemples"
+    detail: "Split 649 train / 177 val / 177 test par question entière"
+  - label: "Comparaison prompts (Bloc B)"
+    value: "4/9 vs 6/9"
+    detail: "Criteria (4/9) vs Few-shot (6/9) sur 9 cas de développement"
+  - label: "Tests techniques (Bloc B)"
+    value: "13/13 validés"
+    detail: "Contrats d'API, parsing strict, historique borné et fiches"
+architectureSteps:
+  - step: "01"
+    title: "Chargement Fiche & Historique Borné"
+    description: "Validation du concept et de la question JSON (load_concept / load_question) et filtrage des 3 derniers échanges complets."
+    tag: "src/agents/concepts.py • history.py"
+  - step: "02"
+    title: "Construction du Prompt Pédagogique"
+    description: "Assemblage du cours accessible (apres_section), des points clés et de la grille de niveaux selon la variante criteria ou fewshot."
+    tag: "src/llm/prompts.py"
+  - step: "03"
+    title: "Inférence Qwen2.5-3B-Instruct"
+    description: "Application du chat template natif (apply_chat_template) et génération déterministe des nouveaux tokens."
+    tag: "src/llm/generation.py • model.py"
+  - step: "04"
+    title: "Parsing Strict du Contrat de Sortie"
+    description: "Extraction sans rattrapage artificiel du marqueur [VERDICT: PARFAIT|PARTIEL|INCORRECT] ou [HORS_PERIMETRE] et du feedback."
+    tag: "src/agents/baseline.py • inference.py"
+repositoryUrl: "https://github.com/EmineOA/NLP-Transformers"
+demoUrl: null
+repositoryStatusNote: "Dépôt GitHub public (code du moteur Bloc B, fiches, tests et scripts d'expérimentation). Aucune démonstration publique hébergée."
+---
+
+## 1. Contexte et problématique
+
+**Brainmaxxing** est un projet académique collaboratif réalisé par une équipe de six étudiants dans le cadre d'un module dédié aux modèles **Transformers** et aux systèmes de dialogue. L'objectif est de concevoir un tuteur pédagogique capable d'accompagner un étudiant dans un parcours d'apprentissage actif :
+
+1. L'étudiant découvre l'explication progressive d'un concept (en mathématiques ou en philosophie).
+2. Il répond avec ses propres mots à une **question ouverte** de compréhension, d'exemple ou d'application.
+3. L'agent évalue sa réponse au regard d'une grille pédagogique structurée et lui attribue un verdict parmi `PARFAIT`, `PARTIEL` ou `INCORRECT` (ou oppose un refus contrôlé en cas de demande hors périmètre, comme une demande de solution directe), accompagné d'un feedback ciblé qui guide le raisonnement sans donner immédiatement la réponse.
+
+La problématique technique centrale consiste à **contrôler le comportement d'un modèle de langage génératif (`Qwen/Qwen2.5-3B-Instruct`)** afin qu'il respecte simultanément :
+- une **grille d'évaluation propre à chaque question** (sans imposer une opinion arbitraire, notamment sur des sujets philosophiques où plusieurs positions argumentées sont recevables) ;
+- l'**état d'avancement du cours** (ne pas évaluer l'étudiant sur des sections qu'il n'a pas encore lues via la borne `apres_section`) ;
+- un **contrat de sortie formel strict** exploitable de manière déterministe par le reste de l'application (évaluation automatique et interface utilisateur).
+
+## 2. Mon rôle et mes contributions
+
+Le projet a été découpé en six blocs fonctionnels répartis au sein de l'équipe :
+- **Bloc A (Pédagogie)** : conception des 6 fiches concepts, des 17 questions ouvertes et des grilles de critères.
+- **Bloc B (Moteur LLM & Baseline conversationnelle — Epics E2 et E3)** : **mon périmètre de responsabilité personnelle**.
+- **Bloc C (Données & Adaptation QLoRA)** : constitution du dataset supervisé (1 003 exemples) et fine-tuning QLoRA 4-bit.
+- **Bloc D (Évaluation)** : protocole d'évaluation comparative et matrice de traçabilité.
+- **Bloc E (Application Gradio)** et **Bloc F (Rendu & Reproductibilité)** : interface utilisateur et assemblage des livrables.
+
+Au sein du **Bloc B**, j'ai conçu et développé l'ensemble de la brique d'observation du Transformer, le moteur d'inférence conversationnel, le système de prompts de la baseline et les tests unitaires associés :
+
+- **Étude expérimentale des mécanismes internes du Transformer (Epic E2)** :
+  - Analyse de la tokenisation, des représentations vectorielles (*embeddings*), du masque d'attention causale et de la projection finale (*unembedding*) vers les *logits* du vocabulaire (`(1, 6, 151936)` sur une séquence de 6 tokens avec `Qwen2.5-3B-Instruct`).
+  - Implémentation explicite en PyTorch (`src/llm/decoding.py`) de la génération autorégressive et des stratégies de décodage : recherche gloutonne (`greedy / argmax`), mise à l'échelle par **température**, filtrage **top-k** et filtrage par noyau **top-p** (*nucleus sampling*).
+- **Développement du moteur LLM et de l'API commune (Epic E3)** :
+  - Implémentation du chargement du modèle et du tokenizer avec sélection automatique du périphérique (`CUDA`, `MPS` ou `CPU`) dans `src/llm/model.py`.
+  - Encapsulation du *chat template* natif de Qwen (`tokenizer.apply_chat_template`) et décodage exclusif des nouveaux tokens générés (`src/llm/generation.py`).
+  - Conception du constructeur de prompts pédagogiques (`src/llm/prompts.py`) injectant dynamiquement les sections de cours autorisées, les points clés et les critères de chaque verdict.
+  - Implémentation de la gestion d'un **historique conversationnel borné** (conservation par défaut des 3 derniers échanges complets `user` / `assistant`) dans `src/agents/history.py` et `src/agents/inference.py`.
+  - Développement du parseur strict de verdicts (`parse_pedagogical_response` dans `src/agents/baseline.py`) et du point d'entrée unifié `generate_response(...)` utilisé par les blocs d'évaluation, d'adaptation LoRA et d'interface.
+- **Évaluation de développement et tests logiciels** :
+  - Comparaison expérimentale de deux stratégies de prompting (`criteria` vs `fewshot`) via `scripts/compare_prompts.py`.
+  - Écriture de la suite de tests techniques (`tests/test_bloc_b.py` — 13 tests unitaires sans dépendance GPU) et du script de test d'intégration sur modèle réel (`scripts/test_integrated_smoke.py`).
+  - Rédaction de la documentation technique détaillée du moteur (`README_BLOC_B.md`).
+
+## 3. Approche technique et architecture
+
+L'architecture du moteur (`src/agents/` et `src/llm/`) a été conçue pour isoler complètement la logique d'inférence LLM des autres composants du projet via un contrat d'interface unique :
+
+```python
+from src.agents.concepts import load_concept, load_question
+from src.agents.inference import generate_response
+
+concept = load_concept("monty-hall")
+question = load_question(concept, "monty-hall_q1")
+
+resultat = generate_response(
+    messages=[{
+        "role": "user",
+        "content": "Je garde, car il reste deux portes, donc 50/50."
+    }],
+    concept=concept,
+    question=question,
+    model_version="baseline",
+    prompt_version="fewshot",
+)
+# -> {"verdict": "PARTIEL", "feedback": "...", "raw_response": "...", "valid_format": True}
+```
+
+Trois choix de conception structurent cette implémentation :
+
+1. **Sécurité et contrôle du périmètre avant appel au modèle** : `generate_response` valide systématiquement la structure des messages (en interdisant l'injection d'un rôle `system` externe depuis l'interface), vérifie que le concept existe dans le corpus JSON et contrôle que la question appartient bien au concept actif. Si tel n'est pas le cas, un refus contrôlé est renvoyé sans interroger le LLM.
+2. **Protection contre la fuite d'information pédagogique** : lors de la construction du prompt (`build_pedagogical_prompt`), seules les sections de cours d'indice inférieur à `question["apres_section"]` sont injectées, afin que le tuteur ne révèle ni n'exige des notions abordées dans les questions suivantes.
+3. **Parseur sans rattrapage artificiel** : `parse_pedagogical_response` exige exactement un marqueur en première ligne (`[VERDICT: PARFAIT]`, `[VERDICT: PARTIEL]`, `[VERDICT: INCORRECT]` ou `[HORS_PERIMETRE]`), l'absence de balises dupliquées dans le corps du texte et un feedback non vide. Toute sortie mal formée est signalée avec `valid_format: False` et `verdict: None`, ce qui permet de mesurer honnêtement les erreurs de format du modèle.
+
+## 4. Réalisation et expérimentations
+
+### Étude des stratégies de décodage (E2)
+Dans `src/llm/decoding.py` et les notebooks `experiments/tokens_logits.ipynb` et `experiments/decoding.ipynb`, la chaîne complète de transformation des *logits* a été implémentée étape par étape :
+
+```text
+logits ──► division par température (logits / T) ──► filtrage top-k ──► filtrage top-p ──► softmax ──► échantillonnage multinomial (torch.multinomial)
+```
+
+Ces expériences ont permis de documenter l'effet de la température (`T < 1` concentrant la masse de probabilité, `T > 1` l'aplatissant) et la différence entre un seuil fixe de candidats (`top-k`) et un seuil adaptatif de probabilité cumulée (`top-p`). Pour la baseline d'évaluation pédagogique, un décodage déterministe (`do_sample=False`, `max_new_tokens=160`) a été retenu afin de garantir la reproductibilité des comparaisons entre prompts.
+
+### Comparaison des stratégies de prompting (E3)
+Deux versions du prompt système ont été comparées sur les mêmes fiches et avec le même modèle de base `Qwen/Qwen2.5-3B-Instruct` non entraîné :
+- **`criteria`** : fournit l'énoncé, le cours accessible, les points de référence, la grille de critères par niveau (`parfait`, `partiel`, `incorrect`, `refus`) et les règles de formatage.
+- **`fewshot`** : reprend la configuration `criteria` en y ajoutant les réponses étalons (`niveaux[*].exemple`) définies dans la fiche de la question.
+
+## 5. Résultats et limites
+
+### Résultats mesurés sur le Bloc B (Baseline)
+
+| Vérification / Protocole | Résultat documenté | Contexte et interprétation |
+| :--- | :--- | :--- |
+| **Tests unitaires (`tests/test_bloc_b.py`)** | **13 / 13 réussis** | Validation du contrat de sortie, du parseur, de l'historique borné et du rejet des entrées invalides (sans GPU). |
+| **Validation structurelle du corpus** | **6 fiches / 17 questions** | Chargement et génération sans erreur des prompts pour les 8 questions de mathématiques et 9 questions de philosophie. |
+| **Prompt `criteria` (jeu de dév.)** | **4 / 9 verdicts et formats corrects** (44,4 %) | Format valide dans **8 / 9** cas (88,9 %) sur le jeu de développement de 9 cas (`dev_cases_bloc_b.jsonl`). |
+| **Prompt `fewshot` (jeu de dév.)** | **6 / 9 verdicts et formats corrects** (66,7 %) | Format valide dans **8 / 9** cas (88,9 %) sur les mêmes 9 cas ; configuration retenue provisoirement pour la baseline. |
+
+### Contexte du projet collectif (Blocs A, C, D, E)
+- À l'échelle du groupe, le corpus rassemble **6 concepts**, **17 questions ouvertes** et un dataset supervisé de **1 003 exemples** (découpé par question entière en `649 train / 177 val / 177 test`).
+- Le **Bloc C** (réalisé par un autre membre de l'équipe) a conduit l'adaptation **QLoRA 4-bit** (`Qwen2.5-3B-Instruct`, `r=16`, `alpha=32`), qui a été branchée sur l'API commune `generate_response(..., model_version="lora")`.
+
+### Limites identifiées
+- **Taille du jeu de développement du Bloc B** : la comparaison `4/9` vs `6/9` repose sur 9 cas de développement utilisés pour sélectionner le prompt ; elle ne constitue pas une mesure de généralisation finale.
+- **Gestion des refus par le modèle de base** : sans fine-tuning, `Qwen2.5-3B-Instruct` échoue fréquemment à utiliser la balise de refus `[HORS_PERIMETRE]` ou tente de répondre directement lorsqu'un étudiant réclame la solution.
+- **Fenêtre d'historique bornée** : la limitation à 3 échanges antérieurs complets protège la longueur de contexte mais ne suffit pas toujours à conserver une prise de position formulée à la première question lors d'une troisième question philosophique après plusieurs essais.
+- **État d'intégration du projet collectif** : sur la branche principale, le moteur d'inférence, les fiches, le dataset et l'adaptateur QLoRA sont intégrés, tandis que la finalisation du parcours Gradio complet (PR #11 et PR #12) et l'assemblage du notebook final `agent.ipynb` restaient en cours de clôture collective.
+
+## 6. Technologies
+
+`Python 3.12` • `Hugging Face Transformers` • `PyTorch` • `Qwen/Qwen2.5-3B-Instruct` • `Prompt Engineering` • `unittest` • `LoRA / QLoRA (collectif)` • `Gradio (collectif)`
+
+## 7. Liens et ressources
+
+- **Dépôt GitHub du projet** : [github.com/EmineOA/NLP-Transformers](https://github.com/EmineOA/NLP-Transformers)
+- **Documentation dédiée au Bloc B dans le dépôt** : [`README_BLOC_B.md`](https://github.com/EmineOA/NLP-Transformers/blob/main/README_BLOC_B.md)
+- **Code du moteur et des prompts** : dossiers [`src/llm/`](https://github.com/EmineOA/NLP-Transformers/tree/main/src/llm) et [`src/agents/`](https://github.com/EmineOA/NLP-Transformers/tree/main/src/agents)

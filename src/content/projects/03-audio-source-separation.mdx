@@ -1,9 +1,12 @@
 ---
-order: 3
-code: "PRJ-03"
+order: 4
+code: "PRJ-04"
 title: "Séparation de sources audio et traitement du signal"
 shortTitle: "Analyse temps-fréquence (FFT, STFT, HPSS) & Évaluation SDR/SIR/SAR"
 domain: "Traitement Numérique du Signal & Mathématiques Appliquées"
+projectContext: "Projet académique"
+workMode: "Projet académique"
+myRoleSummary: "Implémentation en Python des transformations spectrales (FFT, STFT), expérimentation de la séparation harmonique-percussive (HPSS) et évaluation quantitative via les métriques SDR, SIR et SAR."
 priority: true
 summary: "Étude expérimentale de méthodes classiques de séparation de sources audio fondées sur l'analyse temps-fréquence."
 technologies:
@@ -17,97 +20,93 @@ technologies:
 highlights:
   - "Modélisation mathématique et représentation temps-fréquence par FFT et STFT"
   - "Implémentation et étude de la séparation harmonique-percussive (HPSS)"
-  - "Comparaison rigoureuse d'approches algorithmiques de séparation de sources"
-  - "Évaluation quantitative standardisée via les métriques SDR, SIR et SAR"
+  - "Comparaison d'approches algorithmiques de masquage spectral en Python"
+  - "Évaluation quantitative standardisée avec les métriques SDR, SIR et SAR"
 metrics:
-  - label: "Représentation spectrale"
+  - label: "Analyse spectrale"
     value: "FFT & STFT"
-    detail: "Analyse fréquentielle et temps-fréquence (amplitude / phase)"
-  - label: "Décomposition"
+    detail: "Passage temps-fréquence (module et phase)"
+  - label: "Méthode étudiée"
     value: "HPSS"
-    detail: "Harmonic-Percussive Source Separation sur spectrogrammes"
-  - label: "Protocole d'évaluation"
+    detail: "Séparation des composantes harmoniques et percussives"
+  - label: "Métriques d'évaluation"
     value: "SDR • SIR • SAR"
-    detail: "Distorsion globale, réjection d'interférences et artefacts"
-  - label: "Stack scientifique"
+    detail: "Distorsion globale, interférences résiduelles et artefacts"
+  - label: "Outils scientifiques"
     value: "NumPy • SciPy • Librosa"
-    detail: "Calcul matriciel et traitement numérique du signal en Python"
+    detail: "Calcul matriciel et traitement numérique du signal"
 architectureSteps:
   - step: "01"
-    title: "Échantillonnage & Analyse Fréquentielle (FFT / STFT)"
-    description: "Passage du domaine temporel au domaine temps-fréquence par fenêtrage et Transformée de Fourier à Court Terme (STFT) pour obtenir le spectrogramme complexe."
+    title: "Analyse Temps-Fréquence (FFT / STFT)"
+    description: "Fenêtrage du signal audio et calcul de la Transformée de Fourier à Court Terme (STFT) pour obtenir le spectrogramme complexe."
     tag: "FFT • STFT • SciPy"
   - step: "02"
-    title: "Séparation Algorithmique & Filtrage Spectral (HPSS)"
-    description: "Exploitation des régularités directionnelles du spectrogramme (continuité horizontale des harmoniques vs transitoires verticaux percussifs) et construction de masques temps-fréquence."
+    title: "Décomposition Spectrale (HPSS)"
+    description: "Séparation des structures horizontales (harmoniques) et verticales (percussives) du spectrogramme et création des masques."
     tag: "HPSS • NumPy • Librosa"
   - step: "03"
-    title: "Reconstruction Temporelle par STFT Inverse"
-    description: "Application des masques fréquentiels et synthèse des signaux séparés dans le domaine temporel en préservant la cohérence de phase."
-    tag: "ISTFT • Synthèse"
+    title: "Synthèse Temporelle (ISTFT)"
+    description: "Application des masques fréquentiels et retour au domaine temporel par STFT inverse en réutilisant la phase du mélange."
+    tag: "ISTFT • Reconstruction"
   - step: "04"
-    title: "Évaluation Objective Multi-Critères"
-    description: "Mesure comparative des signaux reconstruits à l'aide des indicateurs standardisés SDR (Signal-to-Distortion), SIR (Signal-to-Interference) et SAR (Signal-to-Artifacts)."
+    title: "Évaluation Objective (SDR / SIR / SAR)"
+    description: "Comparaison des signaux reconstruits aux sources de référence à l'aide des indicateurs SDR, SIR et SAR."
     tag: "SDR • SIR • SAR"
 repositoryUrl: null
 demoUrl: null
-repositoryStatusNote: "Les notebooks d'expérimentation et d'analyse spectrale peuvent être partagés sur demande."
+repositoryStatusNote: "Notebooks d'expérimentation et d'analyse spectrale disponibles sur demande."
 ---
 
-## 1. Présentation et contexte
+## 1. Contexte et problématique
 
-La séparation de sources audio (*Audio Source Separation*) vise à isoler différentes composantes acoustiques (par exemple les éléments harmoniques et percussifs, ou la voix et l'accompagnement) à partir d'un enregistrement mixte. Avant même le recours à des architectures neuronales lourdes, la compréhension approfondie des **méthodes classiques fondées sur l'analyse temps-fréquence** constitue un socle mathématique indispensable en traitement du signal.
+La séparation de sources audio consiste à isoler plusieurs composantes acoustiques (par exemple les instruments harmoniques et les percussions, ou une voix et son accompagnement) à partir d'un signal mixte unique. Avant d'utiliser des réseaux de neurones profonds, les méthodes classiques reposent sur les propriétés mathématiques des **représentations temps-fréquence**.
 
-Ce projet présente une **étude expérimentale rigoureuse** de ces méthodes, en s'appuyant sur la Transformée de Fourier rapide (**FFT**), la Transformée de Fourier à court terme (**STFT**) et la séparation de sources harmoniques et percussives (**HPSS**), évaluées selon les métriques de référence **SDR**, **SIR** et **SAR**.
+La problématique étudiée dans ce projet est double :
+1. Comment exploiter la structure géométrique d'un spectrogramme issu de la Transformée de Fourier à court terme (**STFT**) pour dissocier des sources superposées, notamment par séparation harmonique-percussive (**HPSS**) ?
+2. Comment mesurer objectivement le compromis entre l'élimination des interférences d'autres sources et la dégradation du signal cible par des artefacts numériques ?
 
-## 2. Problématique
+## 2. Mon rôle et mes contributions
 
-Dans quelle mesure les représentations temps-fréquence linéaires (**STFT**) et les algorithmes de décomposition spectrale comme **HPSS** permettent-ils de dissocier des sources acoustiques superposées, et comment quantifier objectivement le compromis entre la suppression des interférences (**SIR**) et l'apparition d'artefacts numériques (**SAR**) lors de la reconstruction du signal ?
+Dans le cadre de cette étude expérimentale, j'ai réalisé :
 
-## 3. Objectifs
+- **La mise en œuvre des transformations temps-fréquence (`FFT`, `STFT`, `ISTFT`)** en `Python` à l'aide de `NumPy`, `SciPy` et `Librosa`, en étudiant l'impact de la taille de fenêtre et du recouvrement (*hop length*).
+- **L'expérimentation de la méthode HPSS** (*Harmonic-Percussive Source Separation*) et la comparaison de différentes stratégies de masquage spectral (masques binaires vs masques souples de type Wiener).
+- **L'évaluation quantitative systématique** des signaux séparés à l'aide des trois indicateurs standards du domaine : **SDR**, **SIR** et **SAR**.
 
-- **Formaliser les fondements mathématiques** du passage temps-fréquence via la **FFT** et la **STFT** (choix de la fenêtre d'analyse, taille de trame, recouvrement et compromis de Gabor-Heisenberg).
-- **Implémenter et expérimenter différentes approches algorithmiques** de séparation de sources, dont la décomposition **HPSS** (*Harmonic-Percussive Source Separation*) avec `NumPy`, `SciPy` et `Librosa`.
-- **Comparer méthodologiquement les approches** selon le paramétrage spectral et la nature des masques appliqués.
-- **Évaluer quantitativement la qualité de séparation** à l'aide du triplet de métriques standards : **SDR** (*Signal-to-Distortion Ratio*), **SIR** (*Signal-to-Interference Ratio*) et **SAR** (*Signal-to-Artifacts Ratio*).
+## 3. Approche technique et architecture
 
-## 4. Architecture et méthodologie
+Le pipeline de traitement repose sur l'analyse temps-fréquence linéaire :
 
-La démarche expérimentale suit un pipeline mathématique reproductible en quatre étapes :
+1. **Passage au domaine temps-fréquence** : application d'une fenêtre d'analyse glissante et calcul de la **STFT** pour représenter le signal sous forme d'une matrice complexe `X(m, f) = |X(m, f)| · exp(j · φ(m, f))` (module et phase).
+2. **Exploitation de l'anisotropie spectrale (`HPSS`)** : dans un spectrogramme d'amplitude, les sons harmoniques (notes tenues) forment des lignes horizontales continues dans le temps, tandis que les sons percussifs (transitoires brefs) forment des colonnes verticales étalées en fréquence. Un filtrage médian directionnel sur chacun des deux axes permet d'estimer les deux composantes.
+3. **Masquage et reconstruction (`ISTFT`)** : les spectrogrammes estimés permettent de construire des masques temps-fréquence appliqués au mélange complexe avant reconstruction temporelle par transformée inverse.
 
-1. **Transformation temps-fréquence ($X(m, \omega)$)** : calcul de la **STFT** du signal mixte $x(t)$ pour décomposer l'information en module $|X(m, \omega)|$ et en phase $\arg(X(m, \omega))$.
-2. **Séparation dans le domaine spectral** : mise en œuvre de **HPSS** et d'approches classiques exploitant l'anisotropie des spectrogrammes (les sons harmoniques forment des crêtes horizontales stables en fréquence, tandis que les sons percussifs forment des impulsions verticales brèves en temps).
-3. **Masquage et synthèse inverse (ISTFT)** : génération de masques souples ou binaires, pondération du spectrogramme complexe et retour au domaine temporel.
-4. **Protocole de validation quantitative** : confrontation systématique des signaux estimés aux signaux de référence via **SDR**, **SIR** et **SAR**.
+## 4. Réalisation et expérimentations
 
-## 5. Réalisation technique
+Les expérimentations ont porté sur les paramètres qui gouvernent la qualité de séparation :
 
-- **Calcul scientifique et analyse spectrale (`Python`, `NumPy`, `SciPy`, `Librosa`)** :
-  - Manipulation directe des matrices temps-fréquence issues de la **FFT** et de la **STFT**.
-  - Étude de l'influence de la résolution temporelle et fréquentielle sur la séparabilité des composantes.
-- **Décomposition HPSS et comparaison algorithmique** :
-  - Application et paramétrage de l'approche **HPSS** (filtrage médian directionnel sur les axes temporel et fréquentiel).
-  - Comparaison des variantes de masquage spectral et analyse de leur comportement sur des mélanges acoustiques variés.
-- **Instrumentation des métriques (`SDR`, `SIR`, `SAR`)** :
-  - Analyse fine de la décomposition de l'erreur : distinction entre la diaphonie résiduelle des autres sources (**SIR**), le bruit musical introduit par le traitement (**SAR**) et la performance globale (**SDR**).
+- **Compromis temps-fréquence (principe d'incertitude de Gabor)** : comparaison de fenêtres STFT courtes (favorisant la localisation temporelle des attaques percussives) et de fenêtres longues (améliorant la résolution fréquentielle des partiels harmoniques).
+- **Comparaison d'approches algorithmiques** : étude de l'influence de la taille des filtres médians dans **HPSS** et comparaison entre un masquage dur (attribution exclusive de chaque case temps-fréquence à une source) et un masquage souple.
+- **Protocole de mesure SDR / SIR / SAR** : calcul des trois rapports en décibels pour chaque configuration testée afin de dissocier les causes d'erreur.
 
-## 6. Expérimentations et résultats disponibles
+## 5. Résultats et limites
 
-L'étude expérimentale a permis de documenter plusieurs résultats méthodologiques clés :
+### Enseignements expérimentaux et lecture des métriques
 
-- **Rôle déterminant du paramétrage STFT** : la taille de la fenêtre d'analyse conditionne directement la finesse de séparation entre les composantes harmoniques proches en fréquence et les attaques percussives rapides.
-- **Équilibre SIR / SAR mis en évidence par l'évaluation** : un filtrage ou un masquage trop agressif améliore l'isolation de la source cible (**SIR** plus élevé) mais dégrade la naturalité du signal en introduisant des artefacts spectraux (**SAR** plus faible), ce que synthétise l'évolution du **SDR**.
-- **Pertinence de HPSS** : la séparation harmonique/percussive offre une base mathématiquement interprétable et sans phase d'apprentissage supervisé lourd.
+| Métrique | Signification physique | Comportement observé lors des expériences |
+| :--- | :--- | :--- |
+| **SIR** (*Signal-to-Interference Ratio*) | Taux de réjection des autres sources présentes dans le mélange. | Augmente avec un masquage plus sélectif ou binaire, qui supprime davantage les composantes concurrentes. |
+| **SAR** (*Signal-to-Artifacts Ratio*) | Absence d'artefacts numériques (« bruit musical ») introduits par l'algorithme. | Diminue lorsque le masque est trop abrupt ; les masques souples préservent mieux le SAR au prix d'un SIR plus modéré. |
+| **SDR** (*Signal-to-Distortion Ratio*) | Qualité globale de reconstruction combinant interférences et artefacts. | Permet d'identifier le paramétrage STFT / HPSS offrant le meilleur compromis global entre SIR et SAR. |
 
-## 7. Difficultés et enseignements
+### Limites identifiées
+- **Recouvrement spectral simultané** : lorsqu'une source harmonique et une source percussive occupent exactement les mêmes fréquences au même instant, le filtrage médian de **HPSS** ne peut pas les dissocier complètement.
+- **Approximation de la phase** : les méthodes classiques travaillent uniquement sur le module de la STFT et réutilisent la phase du signal mixte lors de la reconstruction inverse (`ISTFT`), ce qui plafonne la qualité de restitution lorsque les sources se chevauchent fortement.
 
-- **Recouvrement temps-fréquence et reconstruction de phase** : lorsque deux sources partagent simultanément les mêmes bandes de fréquences au même instant, la réutilisation de la phase du mélange lors de la STFT inverse introduit des limites physiques inévitables.
-- **Interprétation croisée des métriques** : ce projet démontre qu'un indicateur unique est insuffisant en traitement du signal ; seule la lecture conjointe de **SDR**, **SIR** et **SAR** permet de diagnostiquer rigoureusement le comportement d'un algorithme.
-
-## 8. Technologies
+## 6. Technologies
 
 `Python` • `NumPy` • `SciPy` • `Librosa` • `FFT` • `STFT` • `HPSS` • `SDR / SIR / SAR`
 
-## 9. Code source ou démonstration
+## 7. Liens et ressources
 
-Les implémentations Python et analyses comparatives sont disponibles sur demande pour présentation technique.
+Les implémentations Python et les notebooks d'analyse spectrale de ce projet académique sont disponibles sur demande.

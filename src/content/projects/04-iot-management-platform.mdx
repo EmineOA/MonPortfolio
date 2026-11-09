@@ -1,9 +1,12 @@
 ---
-order: 4
-code: "PRJ-04"
+order: 5
+code: "PRJ-05"
 title: "Plateforme de gestion IoT"
 shortTitle: "Architecture Web Django, Supervision & Sécurité RBAC à 4 niveaux"
 domain: "Ingénierie Logicielle & Architecture Web"
+projectContext: "Projet académique"
+workMode: "Projet collectif en équipe"
+myRoleSummary: "Conception de l'architecture backend sous Django, modélisation de la base de données relationnelle et implémentation du contrôle d'accès basé sur les rôles (RBAC) à quatre niveaux."
 priority: false
 summary: "Application web de gestion d'équipements IoT, comportant des modules de visualisation, d'administration et un contrôle d'accès à quatre niveaux."
 technologies:
@@ -12,93 +15,88 @@ technologies:
   - "HTML/CSS"
   - "Base de données relationnelle"
 highlights:
-  - "Architecture logicielle modulaire développée avec le framework Python Django"
-  - "Système de sécurité et contrôle d'accès basé sur les rôles (RBAC) structuré en 4 niveaux"
-  - "Modules dédiés de visualisation d'équipements IoT et d'administration système"
-  - "Conception de la base de données relationnelle et développement collaboratif en équipe"
+  - "Architecture web développée en Python avec le framework Django"
+  - "Contrôle d'accès basé sur les rôles (RBAC) structuré en 4 niveaux d'habilitation"
+  - "Modules de visualisation de l'état des équipements IoT et d'administration"
+  - "Modélisation de la base de données relationnelle et développement en équipe"
 metrics:
   - label: "Contrôle d'accès (RBAC)"
     value: "4 niveaux"
-    detail: "Cloisonnement granulaire des permissions et des vues"
-  - label: "Backend & Architecture"
+    detail: "Cloisonnement des permissions de consultation et d'administration"
+  - label: "Backend & ORM"
     value: "Python / Django"
-    detail: "Architecture MVT, ORM relationnel et administration sécurisée"
-  - label: "Modules fonctionnels"
+    detail: "Architecture MVT et persistance relationnelle"
+  - label: "Périmètre fonctionnel"
     value: "Visualisation & Admin"
-    detail: "Supervision du parc d'équipements IoT et gestion des droits"
+    detail: "Suivi du parc d'équipements IoT et gestion des utilisateurs"
   - label: "Organisation"
     value: "Travail en équipe"
-    detail: "Coordination technique, modélisation et intégration"
+    detail: "Répartition entre modèle de données, logique métier et vues"
 architectureSteps:
   - step: "01"
-    title: "Modélisation Relationnelle du Parc IoT"
-    description: "Structuration des entités (équipements IoT, états, utilisateurs, profils d'accès) au sein d'une base de données relationnelle exploitée via l'ORM Django."
+    title: "Modélisation Relationnelle"
+    description: "Définition des entités (équipements IoT, états, utilisateurs, niveaux de droits) dans une base de données relationnelle via l'ORM Django."
     tag: "Base de données relationnelle • ORM"
   - step: "02"
-    title: "Moteur d'Autorisation RBAC à 4 Niveaux"
-    description: "Vérification systématique des privilèges côté serveur pour restreindre la consultation, la configuration et l'administration selon 4 niveaux d'habilitation."
+    title: "Contrôle d'Accès RBAC (4 Niveaux)"
+    description: "Vérification côté serveur des permissions associées à chaque niveau d'utilisateur avant l'accès aux vues et actions."
     tag: "Sécurité RBAC • Django"
   - step: "03"
     title: "Logique Métier & Administration"
-    description: "Gestion du cycle de vie des équipements connectés, opérations d'administration et traçabilité des actions au sein du backend Python."
+    description: "Gestion du cycle de vie des équipements connectés et des opérations d'administration dans le backend Python."
     tag: "Python • Architecture Logicielle"
   - step: "04"
-    title: "Interfaces de Visualisation & Supervision"
-    description: "Restitution claire de l'état des équipements IoT et panneaux de gestion adaptés au niveau d'accréditation de l'utilisateur."
-    tag: "HTML/CSS • Visualisation"
+    title: "Interfaces de Visualisation"
+    description: "Affichage de l'état du parc IoT et des panneaux de gestion adaptés au niveau d'habilitation."
+    tag: "HTML/CSS • Templates Django"
 repositoryUrl: null
 demoUrl: null
-repositoryStatusNote: "Projet réalisé en équipe — architecture et extraits techniques présentables en entretien."
+repositoryStatusNote: "Projet académique réalisé en équipe — architecture et modélisation disponibles sur demande."
 ---
 
-## 1. Présentation et contexte
+## 1. Contexte et problématique
 
-Le déploiement d'équipements connectés (**IoT**) au sein d'une organisation nécessite une plateforme centrale capable de conjuguer **visibilité opérationnelle**, **administration structurée** et **sécurité stricte des accès**. Ce projet consiste à concevoir et développer en équipe une **application web complète sous Django (Python)** permettant de superviser et d'administrer une flotte d'équipements IoT tout en appliquant une politique de contrôle d'accès à quatre niveaux.
+La gestion d'un parc d'équipements connectés (**IoT**) au sein d'une organisation nécessite de centraliser la consultation de l'état des appareils tout en encadrant strictement les droits de modification et d'administration. Tous les utilisateurs ne doivent pas disposer des mêmes privilèges : certains consultent uniquement les indicateurs, tandis que d'autres gèrent les équipements ou administrent les comptes.
 
-## 2. Problématique
+Ce projet collectif consiste à concevoir et développer une **application web sous Django (`Python`)** intégrant une base de données relationnelle, des vues de visualisation et d'administration, ainsi qu'un **contrôle d'accès basé sur les rôles (RBAC) à quatre niveaux**.
 
-Comment structurer l'architecture logicielle et le modèle de données relationnel d'une plateforme de gestion IoT afin d'offrir des interfaces de visualisation et d'administration fluides, tout en garantissant une isolation rigoureuse des droits grâce à un **contrôle d'accès basé sur les rôles (RBAC) à quatre niveaux** ?
+## 2. Mon rôle et mes contributions
 
-## 3. Objectifs
+Au sein de l'équipe projet, j'ai contribué principalement à l'architecture logicielle et à la sécurité applicative :
 
-- **Concevoir une architecture web modulaire et maintenable** autour de `Django` et `Python`.
-- **Modéliser une base de données relationnelle cohérente** prenant en charge l'inventaire des équipements IoT, leurs données d'état et les profils utilisateurs.
-- **Implémenter une politique de sécurité RBAC à 4 niveaux** gouvernant l'accès aux vues de visualisation comme aux opérations d'administration.
-- **Coordonner le développement en équipe** en séparant proprement les responsabilités entre le schéma de données, la logique métier et l'intégration `HTML/CSS`.
+- **Modélisation de la base de données relationnelle** : définition des tables et des relations entre les équipements IoT, leurs relevés d'état et les profils d'utilisateurs via l'ORM de `Django`.
+- **Implémentation du contrôle d'accès RBAC à 4 niveaux** : mise en place des règles de vérification des droits côté serveur pour protéger les routes et les actions sensibles.
+- **Développement des modules de gestion et d'administration** : écriture des vues `Python` assurant l'ajout, la modification et la supervision des équipements, en coordination avec l'intégration `HTML/CSS`.
 
-## 4. Architecture et méthodologie
+## 3. Approche technique et architecture
 
-L'application repose sur l'architecture **MVT (*Model-View-Template*)** de `Django`, enrichie d'une couche de contrôle de permissions transversale :
+L'application s'appuie sur le patron **MVT (*Model-View-Template*)** de `Django` :
 
-1. **Couche de persistance relationnelle** : définition des schémas de tables gérant les équipements IoT, leurs attributs techniques et les relations avec les niveaux d'habilitation.
-2. **Couche de sécurité RBAC (4 niveaux)** : filtrage des requêtes et protection des routes côté serveur afin que chaque profil n'accède qu'aux fonctionnalités et périmètres autorisés.
-3. **Modules de visualisation et d'administration** : séparation nette entre les tableaux de consultation de l'état du parc et les interfaces de gestion réservées aux niveaux supérieurs.
+1. **Couche de données relationnelle (*Models*)** : représentation structurée des équipements IoT et des quatre échelons d'habilitation utilisateur. L'utilisation de l'ORM garantit l'intégrité référentielle et protège les requêtes contre les injections SQL.
+2. **Couche de contrôle et de sécurité (*Views* & RBAC)** : chaque requête entrante est évaluée au regard du niveau d'accès de l'utilisateur authentifié avant d'autoriser la lecture, l'édition d'un équipement ou l'administration des comptes.
+3. **Couche de présentation (*Templates* `HTML/CSS`)** : adaptation des interfaces de visualisation et des menus d'administration en fonction des droits effectifs du profil connecté.
 
-## 5. Réalisation technique
+## 4. Réalisation et expérimentations
 
-- **Backend & Architecture logicielle (`Python`, `Django`)** :
-  - Structuration du projet en composants découplés facilitant le développement parallèle en équipe.
-  - Utilisation de l'ORM Django pour sécuriser les requêtes vers la **base de données relationnelle** et prévenir les injections SQL.
-- **Sécurité et contrôle d'accès (`RBAC à 4 niveaux`)** :
-  - Définition de quatre échelons de privilèges distincts.
-  - Application de décorateurs et de contrôles d'accès sur les vues et les actions d'administration pour empêcher toute élévation de privilèges.
-- **Interfaces de visualisation et d'administration (`HTML/CSS`)** :
-  - Conception de vues claires pour suivre l'état des équipements IoT et administrer la plateforme.
+Le développement en équipe a été structuré autour de trois axes techniques :
 
-## 6. Expérimentations et résultats disponibles
+- **Définition de la matrice de permissions (4 niveaux)** : spécification précise des actions autorisées à chaque échelon (de la simple consultation jusqu'à l'administration complète de la plateforme) et centralisation des contrôles dans le backend afin d'éviter de reposer uniquement sur le masquage visuel des boutons.
+- **Supervision et administration du parc IoT** : création des vues permettant de visualiser l'état des équipements enregistrés et de filtrer l'inventaire.
+- **Tests fonctionnels des parcours d'accès** : vérification systématique, pour chacun des quatre niveaux de rôle, que les routes non autorisées sont bien bloquées côté serveur.
 
-- **Validation fonctionnelle du modèle RBAC à 4 niveaux** : vérification des parcours utilisateurs et du cloisonnement effectif des actions sensibles d'administration par rapport aux profils de simple consultation.
-- **Intégration complète en équipe** : livraison d'une plateforme fonctionnelle réunissant persistance relationnelle, modules de visualisation IoT et panneau d'administration.
+## 5. Résultats et limites
 
-## 7. Difficultés et enseignements
+### Résultats obtenus
+- **Plateforme web opérationnelle** : livraison en équipe d'une application réunissant persistance relationnelle, visualisation du parc IoT et administration.
+- **Cloisonnement effectif des 4 niveaux RBAC** : validation des contrôles d'autorisation sur l'ensemble des vues de consultation et de gestion.
 
-- **Conception d'un RBAC sans duplication de code** : maintenir quatre niveaux d'accès distincts exige de centraliser les règles d'autorisation dans le backend plutôt que de disperser des conditions dans les gabarits d'affichage.
-- **Synchronisation du travail en équipe** : la définition en amont du schéma relationnel et des contrats entre vues Django et templates HTML/CSS s'est avérée déterminante pour assurer une intégration fluide.
+### Limites identifiées
+- **Simulation des équipements IoT** : dans ce cadre académique, les états et relevés des équipements sont gérés au niveau de la base de données relationnelle et de l'application web, sans ingestion temps réel via des protocoles matériels dédiés (comme MQTT) ni déploiement sur une infrastructure cloud de production.
 
-## 8. Technologies
+## 6. Technologies
 
-`Django` • `Python` • `HTML/CSS` • `Base de données relationnelle` • `Sécurité RBAC`
+`Django` • `Python` • `HTML/CSS` • `Base de données relationnelle` • `Contrôle d'accès RBAC`
 
-## 9. Code source ou démonstration
+## 7. Liens et ressources
 
-Les détails d'architecture et de modélisation relationnelle peuvent être présentés sur demande.
+Ce projet ayant été réalisé en équipe dans un cadre académique, son code source n'est pas publié publiquement ; l'architecture et le schéma relationnel peuvent être présentés lors d'un entretien.

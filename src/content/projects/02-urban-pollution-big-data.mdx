@@ -1,9 +1,12 @@
 ---
-order: 2
-code: "PRJ-02"
+order: 3
+code: "PRJ-03"
 title: "Analyse Big Data et prévision de pollution urbaine"
 shortTitle: "Calcul distribué, Graphes & Streaming (Apache Spark / Scala)"
 domain: "Big Data & Calcul Distribué"
+projectContext: "Projet académique"
+workMode: "Projet académique"
+myRoleSummary: "Développement en Scala des pipelines Apache Spark (Spark SQL, GraphX, Spark Streaming) et expérimentation de modèles de régression et Random Forest avec MLlib sur les données PM10 et PM2.5."
 priority: true
 summary: "Pipeline distribué pour traiter les données de pollution atmosphérique PM10 et PM2.5, analyser leurs relations avec un réseau de transport et expérimenter des modèles de prédiction."
 technologies:
@@ -14,100 +17,91 @@ technologies:
   - "Spark Streaming"
   - "MLlib"
 highlights:
-  - "Architecture de calcul distribué en Scala sous Apache Spark pour les polluants PM10 et PM2.5"
-  - "Modélisation topologique et analyse des corrélations avec un réseau de transport via GraphX"
-  - "Traitement de flux et détection d'anomalies avec Spark Streaming"
+  - "Traitement distribué en Scala sous Apache Spark et Spark SQL pour les relevés PM10 et PM2.5"
+  - "Modélisation d'un réseau de transport sous forme de graphe avec Spark GraphX"
+  - "Ingestion en flux et détection d'anomalies sur les mesures via Spark Streaming"
   - "Expérimentation de modèles prédictifs (Régression et Random Forest) avec Spark MLlib"
 metrics:
-  - label: "Polluants ciblés"
+  - label: "Polluants étudiés"
     value: "PM10 & PM2.5"
-    detail: "Analyse des concentrations de particules fines urbaines"
-  - label: "Moteur distribué"
+    detail: "Séries temporelles de concentrations de particules fines"
+  - label: "Moteur de traitement"
     value: "Apache Spark / Scala"
-    detail: "Traitement unifié SQL, Graphes, Streaming et Machine Learning"
-  - label: "Modélisation spatiale"
+    detail: "Chaîne unifiée SQL, Graphes, Streaming et Machine Learning"
+  - label: "Analyse topologique"
     value: "Spark GraphX"
-    detail: "Couplage avec la structure d'un réseau de transport"
-  - label: "Apprentissage distribué"
-    value: "Spark MLlib"
-    detail: "Modèles de Régression et Random Forest"
+    detail: "Modélisation des nœuds et liaisons du réseau de transport"
+  - label: "Modèles testés (MLlib)"
+    value: "Régression & RF"
+    detail: "Expérimentation supervisée distribuée avec Random Forest"
 architectureSteps:
   - step: "01"
-    title: "Ingestion & Structuration Distribuée"
-    description: "Chargement, nettoyage et agrégation structurée des relevés de particules PM10 et PM2.5 à l'aide d'Apache Spark et Spark SQL en Scala."
+    title: "Ingestion & Préparation (Spark SQL)"
+    description: "Chargement, typage en Scala, nettoyage et agrégation des relevés de particules PM10 et PM2.5 avec Spark SQL."
     tag: "Apache Spark • Scala • Spark SQL"
   - step: "02"
-    title: "Modélisation de Graphe de Transport"
-    description: "Représentation des stations et des axes du réseau de transport sous forme de graphe distribué pour étudier la propagation et les relations structurelles."
+    title: "Modélisation de Graphe (GraphX)"
+    description: "Construction d'un graphe distribué représentant les stations et liaisons d'un réseau de transport urbain."
     tag: "Spark GraphX"
   - step: "03"
-    title: "Streaming & Détection d'Anomalies"
-    description: "Traitement de flux continu via Spark Streaming pour identifier rapidement les dépassements de seuils et comportements atypiques des capteurs."
+    title: "Traitement de Flux (Spark Streaming)"
+    description: "Analyse par micro-batchs pour suivre les relevés en continu et isoler les dépassements de seuils ou anomalies."
     tag: "Spark Streaming"
   - step: "04"
-    title: "Prévision par Apprentissage Distribué"
-    description: "Entraînement et évaluation de modèles de Régression et de Random Forest au sein de Spark MLlib pour anticiper les niveaux de pollution."
+    title: "Apprentissage Supervisé (MLlib)"
+    description: "Assemblage des variables explicatives et expérimentation de modèles de Régression et de Random Forest."
     tag: "Spark MLlib • Random Forest"
 repositoryUrl: null
 demoUrl: null
-repositoryStatusNote: "Le dépôt de code Scala / Apache Spark pourra être lié dès sa publication."
+repositoryStatusNote: "Scripts Scala et travaux réalisés en environnement académique, présentables lors d'un échange technique."
 ---
 
-## 1. Présentation et contexte
+## 1. Contexte et problématique
 
-La surveillance de la qualité de l'air en milieu urbain génère des volumes importants de séries temporelles hétérogènes, étroitement liées à la topologie des infrastructures de mobilité. Ce projet met en œuvre un **pipeline Big Data distribué en Scala avec Apache Spark** afin d'analyser les concentrations de particules fines **PM10** et **PM2.5**, d'étudier leurs interactions avec un **réseau de transport** et d'expérimenter des modèles de prévision à l'échelle.
+L'étude de la pollution atmosphérique urbaine (particules fines **PM10** et **PM2.5**) repose sur l'exploitation conjointe de séries temporelles issues de capteurs et de données structurelles décrivant le réseau de transport. Dans un contexte Big Data, traiter ces informations nécessite d'articuler plusieurs paradigmes habituellement séparés : requêtage relationnel, analyse de graphes, traitement de flux et apprentissage automatique.
 
-## 2. Problématique
+Ce projet académique a pour objectif de mettre en œuvre ces quatre volets au sein d'un **pipeline distribué unique en Scala sur Apache Spark**, afin d'analyser les concentrations de PM10 et PM2.5, d'explorer leurs relations avec la topologie d'un réseau de transport et de tester des modèles de prévision.
 
-Comment unifier, au sein d'une même architecture distribuée, l'exploitation de données historiques de pollution (**PM10** et **PM2.5**), l'analyse structurelle d'un **réseau de transport**, la **détection d'anomalies en flux** et la **modélisation prédictive** sans créer de goulot d'étranglement entre les briques de traitement ?
+## 2. Mon rôle et mes contributions
 
-## 3. Objectifs
+Mes travaux sur ce projet ont porté sur l'implémentation en `Scala` des différentes briques de l'écosystème Apache Spark :
 
-- **Concevoir un pipeline de traitement de données distribué** en `Scala` sur `Apache Spark` et `Spark SQL` pour fiabiliser et croiser les mesures de particules **PM10** et **PM2.5**.
-- **Modéliser le réseau de transport sous forme de graphe** avec `GraphX` afin d'analyser les relations spatiales et structurelles associées à la pollution urbaine.
-- **Implémenter un module de traitement en flux** avec `Spark Streaming` dédié au suivi dynamique et à la **détection d'anomalies**.
-- **Expérimenter des modèles de prédiction distribués** sous `Spark MLlib`, en particulier des approches de **Régression** et de **Random Forest**.
+- **Préparation et structuration des données (`Spark SQL`)** : nettoyage des relevés de capteurs PM10 et PM2.5, gestion des valeurs manquantes et agrégations spatio-temporelles.
+- **Modélisation topologique (`GraphX`)** : représentation du réseau de transport sous forme de graphe distribué (sommets et arêtes) et calcul d'indicateurs structurels pour les croiser avec les niveaux de pollution.
+- **Traitement en flux (`Spark Streaming`)** : mise en place d'une brique de lecture continue permettant de détecter les anomalies et pics de concentration dans les flux de mesures.
+- **Modélisation prédictive (`Spark MLlib`)** : préparation des vecteurs de caractéristiques (*feature engineering*) et expérimentation d'algorithmes de **Régression** et de **Random Forest**.
 
-## 4. Architecture et méthodologie
+## 3. Approche technique et architecture
 
-L'architecture tire parti de l'écosystème unifié d'**Apache Spark** afin d'éviter la fragmentation des outils entre l'ingénierie des données, la théorie des graphes et le Machine Learning :
+Le choix d'**Apache Spark** avec `Scala` permet de conserver les données en mémoire distribuée tout au long de la chaîne de traitement sans multiplier les transferts entre systèmes externes :
 
-1. **Couche de préparation et d'analyse relationnelle (`Spark SQL`)** : typage fort en `Scala`, filtrage des valeurs aberrantes, jointures spatio-temporelles et agrégations sur les séries PM10 et PM2.5.
-2. **Couche d'analyse topologique (`GraphX`)** : construction d'un graphe orienté/pondéré représentant les nœuds et liaisons du réseau de transport pour relier l'activité du réseau aux niveaux d'émission observés.
-3. **Couche temps réel (`Spark Streaming`)** : ingestion par micro-batchs permettant de détecter les anomalies et pics soudains de concentration.
-4. **Couche prédictive (`MLlib`)** : assemblage de vecteurs de caractéristiques (*feature engineering* distribué) et entraînement de modèles de **Régression** et de **Random Forest**.
+1. **Structuration tabulaire (`Spark SQL`)** : chargement des historiques de mesures PM10 et PM2.5 dans des `DataFrames` typés pour exécuter les filtrages et les jointures temporelles.
+2. **Représentation en graphe (`GraphX`)** : modélisation des arrêts et des tronçons de transport sous forme de `RDD` de sommets (*vertices*) et d'arêtes (*edges*), afin d'étudier le lien entre la connectivité du réseau et l'exposition aux particules.
+3. **Suivi dynamique (`Spark Streaming`)** : découpage du flux d'entrée en micro-batchs pour appliquer des règles de détection d'anomalies sur les relevés entrants.
+4. **Pipeline d'apprentissage (`MLlib`)** : utilisation des assembleurs de variables de Spark pour entraîner et comparer des modèles de régression et des forêts aléatoires (**Random Forest**).
 
-## 5. Réalisation technique
+## 4. Réalisation et expérimentations
 
-- **Calcul distribué & Traitement de données (`Apache Spark`, `Scala`, `Spark SQL`)** :
-  - Écriture de transformations fonctionnelles et de requêtes structurées pour préparer les jeux de données PM10 et PM2.5.
-  - Gestion du partitionnement et des opérations de jointure pour préserver l'efficacité du calcul distribué.
-- **Analyse de graphes (`GraphX`)** :
-  - Définition des sommets (*vertices*) et des arêtes (*edges*) modélisant le réseau de transport urbain.
-  - Exploitation d'opérateurs de graphes pour croiser les indicateurs de centralité ou de connectivité avec les mesures environnementales.
-- **Streaming et détection d'anomalies (`Spark Streaming`)** :
-  - Mise en place d'un flux de traitement continu capable d'isoler les observations anormales dans les relevés de pollution.
-- **Modélisation prédictive (`MLlib`)** :
-  - Construction de pipelines d'apprentissage supervisé testant des algorithmes de **Régression** et des forêts aléatoires (**Random Forest**) pour estimer l'évolution des concentrations de particules.
+Les expérimentations techniques ont consisté à valider l'enchaînement des quatre modules sur les jeux de données de pollution et de transport :
 
-## 6. Expérimentations et résultats disponibles
+- **Croisement données tabulaires / graphe** : extraction d'attributs issus de `GraphX` et jointure avec les tables `Spark SQL` contenant les séries PM10 et PM2.5.
+- **Détection d'anomalies en streaming** : définition de seuils statistiques sur les fenêtres glissantes de `Spark Streaming` pour signaler les valeurs aberrantes ou les hausses brusques de concentration.
+- **Comparaison Régression vs Random Forest (`MLlib`)** : confrontation de modèles linéaires de régression à des modèles par arbres (**Random Forest**), ces derniers permettant de mieux prendre en compte les interactions non linéaires entre les variables temporelles et spatiales.
 
-Les travaux expérimentaux menés sur ce projet ont porté sur :
+## 5. Résultats et limites
 
-- **La validation de la chaîne complète de calcul distribué** combinant `Spark SQL`, `GraphX`, `Spark Streaming` et `MLlib` autour des indicateurs **PM10** et **PM2.5**.
-- **L'apport du couplage topologique** entre les relevés de pollution et la structure du réseau de transport modélisée sous `GraphX`.
-- **La comparaison méthodologique des modèles prédictifs** (**Régression** linéaire/régularisée face aux **Random Forest** sous `MLlib`) pour capturer les non-linéarités propres aux phénomènes de dispersion atmosphérique urbaine.
+### Bilan technique du projet
+- **Chaîne distribuée fonctionnelle de bout en bout** : intégration effective, au sein d'un même projet `Scala`, des modules `Spark SQL`, `GraphX`, `Spark Streaming` et `MLlib`.
+- **Apport des modèles ensemblistes** : les expérimentations sous `MLlib` ont mis en évidence l'intérêt des **Random Forest** par rapport à une régression simple lorsque l'on combine des indicateurs temporels et des variables issues du réseau de transport.
 
-## 7. Difficultés et enseignements
+### Limites identifiées
+- **Coût des opérations de *shuffle*** : le passage entre les structures tabulaires (`Spark SQL`) et les structures de graphes (`GraphX`) entraîne des redistributions de données sur le cluster qui doivent être contrôlées par un partitionnement adapté.
+- **Granularité spatiale** : la mise en correspondance entre la position des capteurs de pollution (PM10, PM2.5) et les nœuds du réseau de transport repose sur des hypothèses d'agrégation spatiale qui simplifient la dispersion physique réelle des polluants (météorologie, vent, topographie).
 
-- **Hétérogénéité et synchronisation des sources** : croiser des données ponctuelles de capteurs (PM10, PM2.5) avec une topologie de réseau de transport nécessite des choix précis d'agrégation spatiale et temporelle.
-- **Performance en environnement distribué** : l'utilisation conjointe de `GraphX` et de `Spark SQL` souligne l'importance de limiter les opérations de *shuffle* coûteuses lors des transformations en `Scala`.
-- **Complémentarité Batch / Streaming** : l'articulation entre la détection rapide d'anomalies via `Spark Streaming` et l'entraînement de modèles **Random Forest** / **Régression** sous `MLlib` illustre les fondements des architectures de données industrielles modernes.
-
-## 8. Technologies
+## 6. Technologies
 
 `Apache Spark` • `Scala` • `Spark SQL` • `GraphX` • `Spark Streaming` • `MLlib`
 
-## 9. Code source ou démonstration
+## 7. Liens et ressources
 
-Les scripts Scala et notebooks d'expérimentation Apache Spark peuvent être présentés lors d'un entretien technique.
+Le code source Scala et les supports de ce projet académique ne sont pas hébergés sur un dépôt public et peuvent être détaillés lors d'un entretien.

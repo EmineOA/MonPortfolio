@@ -1,9 +1,12 @@
 ---
-order: 5
-code: "PRJ-05"
+order: 6
+code: "PRJ-06"
 title: "Système intelligent de gestion des déchets"
 shortTitle: "Conception Orientée Objet, Architecture UML & Application JavaFX / MySQL"
 domain: "Conception Objet & Génie Logiciel"
+projectContext: "Projet académique"
+workMode: "Projet collectif (équipe de 4 personnes)"
+myRoleSummary: "Coordination de l'équipe de quatre personnes, conception orientée objet et modélisation UML, développement de la logique métier en Java et de la persistance relationnelle MySQL via JDBC."
 priority: false
 summary: "Application de bureau de gestion des déchets connectés, intégrant une base de données relationnelle et un système de fidélité."
 technologies:
@@ -13,97 +16,89 @@ technologies:
   - "JDBC"
   - "UML"
 highlights:
-  - "Conception orientée objet complète et modélisation d'architecture en UML"
-  - "Application de bureau riche développée en Java et JavaFX"
-  - "Persistance des données relationnelles sous MySQL via connecteur JDBC"
-  - "Intégration d'un système de fidélité métier et coordination d'une équipe de 4 personnes"
+  - "Conception orientée objet et modélisation d'architecture en UML en amont du code"
+  - "Application de bureau développée en Java et JavaFX"
+  - "Persistance des données sous MySQL via JDBC et gestion d'un système de fidélité"
+  - "Coordination technique et organisation du travail d'une équipe de 4 personnes"
 metrics:
-  - label: "Modélisation & Conception"
+  - label: "Conception & Modélisation"
     value: "Architecture UML"
-    detail: "Conception orientée objet en amont de l'implémentation"
-  - label: "Stack Applicative"
+    detail: "Diagrammes de classes et séquences orientés objet"
+  - label: "Application Desktop"
     value: "Java & JavaFX"
-    detail: "Application de bureau structurée et modulaire"
-  - label: "Persistance Relationnelle"
+    detail: "Séparation entre noyau métier et interface graphique"
+  - label: "Persistance des données"
     value: "MySQL & JDBC"
-    detail: "Accès aux données transactionnel et système de fidélité"
-  - label: "Coordination"
+    detail: "Stockage relationnel des dépôts et points de fidélité"
+  - label: "Organisation"
     value: "Équipe de 4"
-    detail: "Répartition des modules, intégration et suivi de projet"
+    detail: "Coordination, répartition des modules et intégration"
 architectureSteps:
   - step: "01"
-    title: "Analyse Métier & Modélisation UML"
-    description: "Formalisation des cas d'utilisation, diagrammes de classes et séquences en UML pour structurer le domaine des déchets connectés et du système de fidélité."
+    title: "Modélisation UML"
+    description: "Définition des cas d'utilisation et des diagrammes de classes en UML pour structurer le domaine métier avant l'implémentation."
     tag: "UML • Conception Objet"
   - step: "02"
-    title: "Couche Métier Orientée Objet (Java)"
-    description: "Implémentation des entités, des règles de gestion des dépôts de déchets et du calcul des points de fidélité selon les principes d'encapsulation et de modularité."
+    title: "Logique Métier (Java)"
+    description: "Implémentation orientée objet de la gestion des équipements de collecte, des dépôts et du calcul des points de fidélité."
     tag: "Java • POO"
   - step: "03"
-    title: "Persistance des Données (MySQL / JDBC)"
-    description: "Conception du schéma relationnel MySQL et implémentation de la couche d'accès aux données via JDBC pour assurer la fiabilité du stockage."
+    title: "Persistance Relationnelle (MySQL / JDBC)"
+    description: "Création du schéma relationnel MySQL et développement de la couche d'accès aux données avec JDBC."
     tag: "MySQL • JDBC"
   - step: "04"
-    title: "Interface Graphique Desktop (JavaFX)"
-    description: "Développement des vues interactives en JavaFX permettant le suivi des opérations et la gestion des comptes et récompenses de fidélité."
-    tag: "JavaFX • UI Desktop"
+    title: "Interface Utilisateur (JavaFX)"
+    description: "Conception des vues desktop en JavaFX pour le suivi des opérations et la consultation du compte de fidélité."
+    tag: "JavaFX • Interface Desktop"
 repositoryUrl: null
 demoUrl: null
-repositoryStatusNote: "Projet réalisé au sein d'une équipe de quatre personnes — dossier de conception UML et architecture disponibles sur demande."
+repositoryStatusNote: "Projet académique réalisé en équipe de 4 personnes — dossier de conception UML et code disponibles sur demande."
 ---
 
-## 1. Présentation et contexte
+## 1. Contexte et problématique
 
-La modernisation de la collecte et du tri des déchets repose de plus en plus sur des systèmes connectés capables de suivre les dépôts et d'encourager les comportements éco-responsables. Ce projet consiste à concevoir et développer une **application de bureau en Java / JavaFX** dédiée à la **gestion intelligente des déchets connectés**, adossée à une base de données relationnelle **MySQL** et intégrant un **système de fidélité** complet.
+Ce projet académique porte sur la conception et le développement d'une **application de bureau en Java (`JavaFX`)** destinée à gérer un réseau de conteneurs de tri et à encourager le recyclage via un **système de fidélité** attribuant des points aux utilisateurs lors de leurs dépôts.
 
-Ce travail a été mené en assurant la **coordination d'une équipe de quatre personnes**, depuis la phase de modélisation **UML** jusqu'à l'intégration finale.
+La problématique technique consiste à structurer une **architecture orientée objet propre**, reliée à une base de données relationnelle **MySQL** via **JDBC**, tout en organisant efficacement le développement parallèle au sein d'une **équipe de quatre personnes** pour éviter un couplage fort entre l'interface graphique, les règles métier et les requêtes SQL.
 
-## 2. Problématique
+## 2. Mon rôle et mes contributions
 
-Comment traduire un besoin fonctionnel mêlant suivi d'équipements de collecte, gestion d'utilisateurs et règles de fidélisation en une **architecture orientée objet robuste**, tout en organisant efficacement le développement parallèle au sein d'une **équipe de quatre personnes** ?
+Dans ce projet mené à quatre, j'ai assuré la **coordination de l'équipe** ainsi qu'une part importante de la conception et du développement backend :
 
-## 3. Objectifs
+- **Coordination de l'équipe de 4 personnes** : découpage du projet en lots fonctionnels, organisation des points d'avancement et intégration des contributions des membres du groupe.
+- **Conception orientée objet et UML** : élaboration des diagrammes **UML** (classes, relations et responsabilités) servant de contrat commun entre les membres de l'équipe.
+- **Développement métier (`Java`) et persistance (`MySQL` / `JDBC`)** : implémentation des classes du domaine (gestion des dépôts et règles d'attribution des points de fidélité), création du schéma relationnel MySQL et écriture des requêtes paramétrées via JDBC, en lien avec les vues `JavaFX`.
 
-- **Établir une conception orientée objet rigoureuse** formalisée en **UML** avant la phase de codage.
-- **Développer une application de bureau ergonomique et réactive** à l'aide de `Java` et `JavaFX`.
-- **Assurer la persistance relationnelle des données** (utilisateurs, opérations de dépôt, barèmes et points du système de fidélité) avec `MySQL` et `JDBC`.
-- **Coordonner une équipe de quatre personnes** autour d'une architecture découplée facilitant le travail simultané et l'intégration.
+## 3. Approche technique et architecture
 
-## 4. Architecture et méthodologie
+L'application est découpée en trois couches afin de permettre à quatre personnes de travailler simultanément sans bloquer l'intégration :
 
-Le projet applique une séparation stricte des responsabilités entre la présentation, le domaine métier et la persistance :
+1. **Modèle de domaine orienté objet (`Java`)** : classes encapsulant les entités métier (utilisateurs, conteneurs de collecte, historiques de dépôts, barèmes et soldes de fidélité) définies lors de la phase de modélisation **UML**.
+2. **Couche d'accès aux données (`JDBC` & `MySQL`)** : centralisation de la connexion à la base relationnelle et des opérations CRUD (création, lecture, mise à jour, suppression) à l'aide de requêtes préparées (`PreparedStatement`).
+3. **Couche de présentation (`JavaFX`)** : interfaces graphiques de bureau permettant aux utilisateurs de consulter leurs opérations et leurs points de fidélité, et aux gestionnaires de suivre l'état des points de collecte.
 
-1. **Conception UML en amont** : définition précise des classes, des associations et des contrats d'interfaces afin que chaque membre de l'équipe de quatre personnes dispose d'un référentiel commun.
-2. **Noyau métier en Java** : implémentation de la logique de gestion des déchets connectés et du moteur d'attribution et de conversion des points de fidélité.
-3. **Couche d'accès aux données (`JDBC` / `MySQL`)** : encapsulation des requêtes SQL paramétrées pour garantir l'intégrité référentielle entre les opérations de tri et les soldes de fidélité.
-4. **Couche de présentation (`JavaFX`)** : vues dédiées aux utilisateurs et à la gestion du système.
+## 4. Réalisation et expérimentations
 
-## 5. Réalisation technique
+Le cycle de réalisation s'est déroulé en trois étapes principales :
 
-- **Conception orientée objet & Architecture (`UML`, `Java`)** :
-  - Modélisation des entités du domaine et structuration du code en packages cohérents.
-  - Implémentation du **système de fidélité** lié aux opérations enregistrées sur les équipements de collecte.
-- **Persistance des données (`MySQL`, `JDBC`)** :
-  - Création du schéma relationnel sous **MySQL**.
-  - Développement des composants de connexion et de requêtage via **JDBC** pour synchroniser l'application Java avec la base de données.
-- **Interface utilisateur (`JavaFX`) & Coordination d'équipe** :
-  - Assemblage des écrans `JavaFX` avec la logique métier.
-  - Organisation des points de synchronisation, répartition des lots techniques et intégration des contributions au sein de l'**équipe de quatre personnes**.
+- **Spécification UML préalable** : validation collective du diagramme de classes et du schéma relationnel avant le démarrage du codage, afin de figer les signatures des méthodes appelées par l'interface `JavaFX`.
+- **Implémentation du système de fidélité et de la persistance JDBC** : développement de la logique de calcul des points en fonction des dépôts enregistrés et synchronisation avec les tables **MySQL**.
+- **Intégration et tests de bout en bout** : assemblage des vues `JavaFX` avec la couche métier et vérification de la persistance effective des transactions d'un lancement à l'autre de l'application.
 
-## 6. Expérimentations et résultats disponibles
+## 5. Résultats et limites
 
-- **Cohérence entre le modèle UML et l'implémentation finale** : la phase de conception objet initiale a permis d'intégrer sans refonte majeure la couche `JavaFX`, le moteur métier `Java` et la base `MySQL`.
-- **Fonctionnement de bout en bout** : validation des flux complets allant de l'enregistrement d'une opération de gestion des déchets jusqu'à la mise à jour persistante du **système de fidélité** via `JDBC`.
+### Résultats obtenus
+- **Application desktop complète et fonctionnelle** : chaîne opérationnelle reliant l'interface `JavaFX`, le noyau orienté objet `Java` et la base de données `MySQL`.
+- **Respect de l'architecture UML en équipe** : le découpage initial a permis aux quatre membres du groupe de développer et d'intégrer leurs modules respectifs dans les délais impartis.
 
-## 7. Difficultés et enseignements
+### Limites identifiées
+- **Accès bas niveau via JDBC** : l'utilisation directe de `JDBC` (sans ORM) est très formatrice pour comprendre la gestion des connexions et le mapping objet-relationnel manuel, mais génère un volume important de code répétitif lorsque le nombre de tables augmente.
+- **Application locale** : le système a été conçu comme une application lourde (`JavaFX`) connectée à une base MySQL locale, sans couche d'API REST intermédiaire.
 
-- **Gestion de la persistance via JDBC** : l'écriture directe de la couche de communication `JDBC` avec `MySQL` renforce la maîtrise du cycle de vie des connexions, des transactions SQL et du mapping objet-relationnel.
-- **Coordination d'une équipe de 4 personnes** : ce projet a confirmé que la qualité des diagrammes **UML** et le découplage entre l'interface `JavaFX` et la couche d'accès aux données sont les meilleurs leviers pour éviter les conflits d'intégration en équipe.
-
-## 8. Technologies
+## 6. Technologies
 
 `Java` • `JavaFX` • `MySQL` • `JDBC` • `UML`
 
-## 9. Code source ou démonstration
+## 7. Liens et ressources
 
-Les diagrammes d'architecture UML et la structure du projet Java/JavaFX peuvent être détaillés lors d'un entretien.
+Les diagrammes d'architecture UML et le code source réalisés avec l'équipe de quatre personnes peuvent être présentés sur demande lors d'un entretien technique.
